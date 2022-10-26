@@ -35,11 +35,19 @@ function InfoPage() {
     }
   }
 
+  const updateSquad = () => {
+    dispatch({
+      type: "UPDATE_SQUAD",
+      payload: squad
+    })
+    setSquad([])
+  }
+
   return (
     <div className="container">
 
-      <Button className='right' color="secondary" size="small" variant="contained" onClick={() => dispatch({ type: "UPDATE_SQUAD", payload: squad })}>Confirm Squad</Button>
-      
+      <Button className='right' color="secondary" size="small" variant="contained" onClick={updateSquad}>Confirm Squad</Button>
+
       <p>Animal Collection:</p>
       <Box sx={{ minWidth: 300, maxWidth: 300 }}>
         <Card variant="outlined">

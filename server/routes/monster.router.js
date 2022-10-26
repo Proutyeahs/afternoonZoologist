@@ -58,7 +58,7 @@ router.get('/', (req, res) => {
     })
 });
 
-router.post('/', (req, res, next) => {
+router.post('/', rejectUnauthenticated, (req, res, next) => {
     const query = `
         INSERT INTO "monster_collection" 
 	    ("user_id", "monster_id", "gold", "hp", "att", "def", "lvl", "exp")
@@ -72,7 +72,7 @@ router.post('/', (req, res, next) => {
     });
 });
 
-router.get('/collection', (req, res, next) => {
+router.get('/collection', rejectUnauthenticated, (req, res, next) => {
     const query = `
         SELECT "monster".monster, "monster".description, "type".type, "monster_collection".* 
 	    FROM "type"
@@ -89,5 +89,27 @@ router.get('/collection', (req, res, next) => {
         res.sendStatus(500);
     });
 });
+
+router.put('/squad', rejectUnauthenticated, (req, res) => {
+    const query = `
+        UPDATE "monster_collection"
+        SET "squad" = false
+        WHERE "user_id" = $1
+    ;`;
+    const query2 = `
+        UPDATE "monster_collection"
+        SET "squad" = true
+        WHERE ("user_id" = $1 AND "id" = $2 OR "id" = $3 OR "id" = $4)
+    ;`;
+    pool.query(query, [req.user.id]).then(() => {
+        pool.query(query2, [req.user.id, req.body[0].id, req.body[1].id, req.body[2].id]).then(() => {
+            res.sendStatus(201)
+        })
+    }).catch((err) => {
+        console.log('User registration failed: ', err);
+        res.sendStatus(500);
+    });
+ });
+ 
 
 module.exports = router;
