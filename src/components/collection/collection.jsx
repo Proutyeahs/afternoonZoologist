@@ -18,28 +18,34 @@ function InfoPage() {
 
   const collection = useSelector((store) => store.collection)
 
-  const [monster, setCurrentMonster] = useState('')
+  const [monster, setMonster] = useState('')
   const [squad, setSquad] = useState([])
 
   const addToSquad = () => {
-    if(squad.includes(monster)) {
-      return alert("animal already in squad")
-    } else if(squad.length < 3) {
+
+    let index = squad.indexOf(monster)
+
+    if (squad.includes(monster)) {
+      squad.splice(index, 1)
+      setMonster('')
+    } else if (squad.length < 3) {
       setSquad([...squad, monster])
     } else {
       alert("squad is full")
     }
-    console.log(squad)
   }
 
   return (
     <div className="container">
+
+      <Button className='right' color="secondary" size="small" variant="contained" onClick={() => dispatch({ type: "UPDATE_SQUAD", payload: squad })}>Confirm Squad</Button>
+      
       <p>Animal Collection:</p>
       <Box sx={{ minWidth: 300, maxWidth: 300 }}>
         <Card variant="outlined">
           {collection.map(monster => (
             <div className="padding" key={monster.id}>
-              <h4 onClick={(e) => setCurrentMonster(monster)} className={`${monster.gold ? "gold" : ""} ${squad.monster === monster.monster ? "squad" : ''}`}>{monster.monster}</h4>
+              <h4 onClick={(e) => setMonster(monster)} className={`${monster.gold ? "gold" : ""} ${squad.includes(monster) ? "squad" : ''}`}>{monster.monster}</h4>
             </div>
           ))}
         </Card>
