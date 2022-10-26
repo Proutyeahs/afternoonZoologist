@@ -124,3 +124,16 @@ input {
 .right {
   float: right;
 }
+
+.size {
+  height: 20px;
+  width: fit-content;
+}
+
+.padding {
+  padding-inline: 20px;
+}
+
+.margin {
+  margin: 0%;
+}
