@@ -137,3 +137,7 @@ input {
 .margin {
   margin: 0%;
 }
+
+.squad {
+  outline: dashed purple;
+}

@@ -19,6 +19,18 @@ function InfoPage() {
   const collection = useSelector((store) => store.collection)
 
   const [monster, setCurrentMonster] = useState('')
+  const [squad, setSquad] = useState([])
+
+  const addToSquad = () => {
+    if(squad.includes(monster)) {
+      return alert("animal already in squad")
+    } else if(squad.length < 3) {
+      setSquad([...squad, monster])
+    } else {
+      alert("squad is full")
+    }
+    console.log(squad)
+  }
 
   return (
     <div className="container">
@@ -27,7 +39,7 @@ function InfoPage() {
         <Card variant="outlined">
           {collection.map(monster => (
             <div className="padding" key={monster.id}>
-              <h4 onClick={(e) => setCurrentMonster(monster)} className={`margin inline ${monster.gold ? "gold" : ""}`}>{monster.monster}</h4>
+              <h4 onClick={(e) => setCurrentMonster(monster)} className={`${monster.gold ? "gold" : ""} ${squad.monster === monster.monster ? "squad" : ''}`}>{monster.monster}</h4>
             </div>
           ))}
         </Card>
@@ -41,6 +53,9 @@ function InfoPage() {
               <p>{monster.description}</p>
               <p>lvl: {monster.lvl}, exp: {monster.exp}, hp: {monster.hp}, att: {monster.att}, def: {monster.def}</p>
             </CardContent>
+            <CardActions>
+              <Button color="secondary" size="small" variant="contained" onClick={addToSquad}>Stage</Button>
+            </CardActions>
           </Card>
         </Box>
       }
