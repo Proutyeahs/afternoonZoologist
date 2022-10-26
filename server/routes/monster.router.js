@@ -15,9 +15,19 @@ router.get('/', (req, res) => {
         LIMIT 3
     ;`;
     pool.query(query).then(result => {
-        console.log(result.rows[0], result.rows[1], result.rows[2])
+
         let monsters = []
+
         for (let stats of result.rows) {
+
+            let gold;
+            let goldOdds = Math.floor(Math.random() * (9999 - 1 + 1)) + 1
+
+            if (goldOdds === 9999) {
+                gold = true
+            } else {
+                gold = false
+            }
 
             let lvl = Math.floor(Math.random() * (5 - 1 + 1)) + 1
             let exp = Math.floor(Math.random() * (99 - 0 + 1)) + 0
@@ -31,17 +41,16 @@ router.get('/', (req, res) => {
                 description: stats.description,
                 type_id: stats.type_id,
                 type: stats.type,
+                gold: gold,
                 lvl: lvl,
                 exp: exp,
                 hp: hp,
                 att: att,
                 def: def
             }
-            console.log(monster)
             monsters.push(monster)
         }
         console.log(monsters)
-
         res.send(monsters)
     }).catch(err => {
         console.log(err)

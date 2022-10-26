@@ -22,7 +22,7 @@ function UserPage() {
       <p>Animals in your area:</p>
       {monsters.map(monster => (
         <div key={monster.id}>
-          <h4 className='inline'>{monster.monster}</h4>, <h5 className='inline'>{monster.type} type</h5>
+          <h4 className={`inline ${monster.gold ? "gold" : ""}`}>{monster.monster}</h4>, <h5 className='inline'>{monster.type} type</h5>
           <p>lvl: {monster.lvl}, exp: {monster.exp}, hp: {monster.hp}, att: {monster.att}, def: {monster.def}</p>
         </div>
       ))}
