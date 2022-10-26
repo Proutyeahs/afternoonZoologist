@@ -19,9 +19,19 @@ function* catchMonster(action) {
     }
 }
 
+function* getCollection() {
+    try {
+        const collection = yield axios.get('/api/monster/collection')
+        yield put({type : 'SET_COLLECTION', payload : collection.data})
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 function* monsterSaga() {
     yield takeLatest('GET_MONSTERS', getMonsters);
     yield takeLatest('CATCH_MONSTER', catchMonster)
+    yield takeLatest('GET_COLLECTION', getCollection)
 }
 
 export default monsterSaga;

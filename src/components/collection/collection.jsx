@@ -6,60 +6,47 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 
-function UserPage() {
-
-  const dispatch = useDispatch()
-
-  const monsters = useSelector((store) => store.monsters)
-
-  const [monster, setCurrentMonster] = useState('')
+function InfoPage() {
 
   useEffect(() => {
     dispatch({
-      type: 'GET_MONSTERS'
+      type: 'GET_COLLECTION'
     })
   }, [])
 
-  let odds = 15
-  const tameAttempt = () => {
-    let attempt = Math.floor(Math.random() * (odds - 1 + 1)) + 1
-    odds++
-    console.log(attempt, odds)
-    if (attempt === 1) {
-      dispatch({
-        type: 'CATCH_MONSTER',
-        payload: monster
-      })
-    }
-  }
+  const dispatch = useDispatch()
 
-  const user = useSelector((store) => store.user);
+  const collection = useSelector((store) => store.collection)
+
+  const [monster, setCurrentMonster] = useState('')
+
   return (
     <div className="container">
-      <h2>Welcome, {user.username}!</h2>
-      <p>Animals in your area:</p>
-        <Card className="size" variant="outlined">
-          {monsters.map(monster => (
-            <div className="inline padding" key={monster.id}>
+      <p>Animal Collection:</p>
+      <Box sx={{ minWidth: 300, maxWidth: 300 }}>
+        <Card variant="outlined">
+          {collection.map(monster => (
+            <div className="padding" key={monster.id}>
               <h4 onClick={(e) => setCurrentMonster(monster)} className={`margin inline ${monster.gold ? "gold" : ""}`}>{monster.monster}</h4>
             </div>
           ))}
         </Card>
+      </Box>
+
       {monster !== '' &&
-        <Box sx={{ minWidth: 275 }} className='right'>
+        <Box sx={{ minWidth: 300, maxWidth: 300 }} className='right'>
           <Card variant="outlined">
             <CardContent>
               <h4 className={`inline ${monster.gold ? "gold" : ""}`}>{monster.monster}</h4>, <h5 className='inline'>{monster.type} type</h5>
+              <p>{monster.description}</p>
               <p>lvl: {monster.lvl}, exp: {monster.exp}, hp: {monster.hp}, att: {monster.att}, def: {monster.def}</p>
             </CardContent>
-            <CardActions>
-              <Button color="secondary" size="small" variant="contained" onClick={tameAttempt}>Tame</Button>
-            </CardActions>
           </Card>
         </Box>
       }
+
     </div>
   );
 }
 
-export default UserPage;
+export default InfoPage;

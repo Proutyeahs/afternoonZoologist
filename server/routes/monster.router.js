@@ -59,18 +59,35 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', (req, res, next) => {
-    const query =`
+    const query = `
         INSERT INTO "monster_collection" 
 	    ("user_id", "monster_id", "gold", "hp", "att", "def", "lvl", "exp")
-        VALUES ($1, $2, $3, $4, $5, $6, $7, $8);
-    `;
-        pool
-            .query(query, [req.user.id, req.body.id, req.body.gold, req.body.hp, req.body.att, req.body.def, req.body.lvl, req.body.exp,])
-            .then(() => res.sendStatus(201))
-            .catch((err) => {
-                console.log('User registration failed: ', err);
-                res.sendStatus(500);
-            });
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+    ;`;
+    pool.query(query, [req.user.id, req.body.id, req.body.gold, req.body.hp, req.body.att, req.body.def, req.body.lvl, req.body.exp,]).then(() =>
+        res.sendStatus(201)
+    ).catch((err) => {
+        console.log('User registration failed: ', err);
+        res.sendStatus(500);
+    });
+});
+
+router.get('/collection', (req, res, next) => {
+    const query = `
+        SELECT "monster".monster, "monster".description, "type".type, "monster_collection".* 
+	    FROM "type"
+	    JOIN "monster"
+	    ON "monster".type_id = "type".id
+	    JOIN "monster_collection"
+	    ON "monster_collection".monster_id = "monster".id
+	    WHERE "user_id" = $1
+    ;`;
+    pool.query(query, [req.user.id]).then(result => {
+        res.send(result.rows)
+    }).catch((err) => {
+        console.log('User registration failed: ', err);
+        res.sendStatus(500);
+    });
 });
 
 module.exports = router;
