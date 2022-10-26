@@ -58,4 +58,19 @@ router.get('/', (req, res) => {
     })
 });
 
+router.post('/', (req, res, next) => {
+    const query =`
+        INSERT INTO "monster_collection" 
+	    ("user_id", "monster_id", "gold", "hp", "att", "def", "lvl", "exp")
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8);
+    `;
+        pool
+            .query(query, [req.user.id, req.body.id, req.body.gold, req.body.hp, req.body.att, req.body.def, req.body.lvl, req.body.exp,])
+            .then(() => res.sendStatus(201))
+            .catch((err) => {
+                console.log('User registration failed: ', err);
+                res.sendStatus(500);
+            });
+});
+
 module.exports = router;
