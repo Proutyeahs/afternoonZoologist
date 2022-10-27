@@ -32,6 +32,16 @@ function* updateSquad(action) {
     console.log(action.payload)
     try {
         yield axios.put('/api/monster/squad', action.payload)
+        yield put({ type: 'GET_SQUAD'})
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+function* getSquad() {
+    try {
+        const squad = yield axios.get('/api/monster/squad')
+        yield put({ type: 'SET_SQUAD', payload: squad.data })
     } catch (error) {
         console.log(error);
     }
@@ -42,6 +52,7 @@ function* monsterSaga() {
     yield takeLatest('CATCH_MONSTER', catchMonster)
     yield takeLatest('GET_COLLECTION', getCollection)
     yield takeLatest('UPDATE_SQUAD', updateSquad)
+    yield takeLatest('GET_SQUAD', getSquad)
 }
 
 export default monsterSaga;

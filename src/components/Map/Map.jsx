@@ -11,12 +11,16 @@ function Map() {
   const dispatch = useDispatch()
 
   const monsters = useSelector((store) => store.monsters)
+  const squad = useSelector((store) => store.squad)
 
   const [monster, setCurrentMonster] = useState('')
 
   useEffect(() => {
     dispatch({
       type: 'GET_MONSTERS'
+    })
+    dispatch({
+      type: 'GET_SQUAD'
     })
   }, [])
 
@@ -40,13 +44,13 @@ function Map() {
       <h2>Welcome, {user.username}!</h2>
 
       <p className='margin'>Current Party:</p>
-      {/* <Card className="size" variant="outlined">
-        {monsters.map(monster => (
+      <Card className="size" variant="outlined">
+        {squad.map(monster => (
           <div className="inline padding" key={monster.id}>
             <h4 onClick={(e) => setCurrentMonster(monster)} className={`margin inline ${monster.gold ? "gold" : ""}`}>{monster.monster}</h4>
           </div>
         ))}
-      </Card> */}
+      </Card>
 
       <p className='margin'>Animals in your area:</p>
 

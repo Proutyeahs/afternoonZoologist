@@ -110,6 +110,24 @@ router.put('/squad', rejectUnauthenticated, (req, res) => {
         res.sendStatus(500);
     });
  });
+
+ router.get('/squad', rejectUnauthenticated, (req, res, next) => {
+    const query = `
+        SELECT "monster".monster, "monster".description, "type".type, "monster_collection".* 
+	    FROM "type"
+	    JOIN "monster"
+	    ON "monster".type_id = "type".id
+	    JOIN "monster_collection"
+	    ON "monster_collection".monster_id = "monster".id
+	    WHERE ("user_id" = $1 AND "squad" = true)
+    ;`;
+    pool.query(query, [req.user.id]).then(result => {
+        res.send(result.rows)
+    }).catch((err) => {
+        console.log('User registration failed: ', err);
+        res.sendStatus(500);
+    });
+});
  
 
 module.exports = router;
