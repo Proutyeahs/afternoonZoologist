@@ -10,10 +10,13 @@ function Map() {
 
   const dispatch = useDispatch()
 
+  const user = useSelector((store) => store.user);
   const monsters = useSelector((store) => store.monsters)
   const squad = useSelector((store) => store.squad)
 
-  const [monster, setCurrentMonster] = useState('')
+  const [monster, setMonster] = useState('')
+  const [details, setDetails] = useState('')
+  const [toggle, setToggle] = useState(null)
 
   useEffect(() => {
     dispatch({
@@ -37,7 +40,24 @@ function Map() {
     }
   }
 
-  const user = useSelector((store) => store.user);
+  const fight = () => {
+
+  }
+
+  const lead = () => {
+    
+  }
+
+  const toggleMonster = (data) => {
+    setToggle(true)
+    setMonster(data)
+  }
+
+  const toggleDetails = (data) => {
+    setToggle(false)
+    setDetails(data)
+  }
+
   return (
     <div className="container">
 
@@ -47,7 +67,7 @@ function Map() {
       <Card className="size" variant="outlined">
         {squad.map(monster => (
           <div className="inline padding" key={monster.id}>
-            <h4 onClick={(e) => setCurrentMonster(monster)} className={`margin inline ${monster.gold ? "gold" : ""}`}>{monster.monster}</h4>
+            <h4 onClick={() => toggleDetails(monster)} className={`margin inline ${monster.gold ? "gold" : ""}`}>{monster.monster}</h4>
           </div>
         ))}
       </Card>
@@ -57,12 +77,12 @@ function Map() {
       <Card className="size" variant="outlined">
         {monsters.map(monster => (
           <div className="inline padding" key={monster.id}>
-            <h4 onClick={(e) => setCurrentMonster(monster)} className={`margin inline ${monster.gold ? "gold" : ""}`}>{monster.monster}</h4>
+            <h4 onClick={() => toggleMonster(monster)} className={`margin inline ${monster.gold ? "gold" : ""}`}>{monster.monster}</h4>
           </div>
         ))}
       </Card>
 
-      {monster !== '' &&
+      {toggle === true &&
         <Box sx={{ minWidth: 300, maxWidth: 300 }} className='right'>
           <Card variant="outlined">
             <CardContent>
@@ -72,6 +92,22 @@ function Map() {
             </CardContent>
             <CardActions>
               <Button color="secondary" size="small" variant="contained" onClick={tameAttempt}>Tame</Button>
+              <Button color="error" size="small" variant="contained" onClick={fight}>Fight</Button>
+            </CardActions>
+          </Card>
+        </Box>
+      }
+
+      {toggle === false &&
+        <Box sx={{ minWidth: 300, maxWidth: 300 }} className='right'>
+          <Card variant="outlined">
+            <CardContent>
+              <h4 className={`inline ${details.gold ? "gold" : ""}`}>{details.monster}</h4>, <h5 className='inline'>{details.type} type</h5>
+              <p>{details.description}</p>
+              <p>lvl: {details.lvl}, exp: {details.exp}, hp: {details.hp}, att: {details.att}, def: {details.def}</p>
+            </CardContent>
+            <CardActions>
+              <Button color="secondary" size="small" variant="contained" onClick={lead}>Lead</Button>
             </CardActions>
           </Card>
         </Box>
