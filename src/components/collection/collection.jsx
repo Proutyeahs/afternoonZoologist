@@ -6,7 +6,7 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 
-function InfoPage() {
+function Collection() {
 
   useEffect(() => {
     dispatch({
@@ -78,4 +78,4 @@ function InfoPage() {
   );
 }
 
-export default InfoPage;
+export default Collection;
