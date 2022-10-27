@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Card from '@mui/material/Card';
 import Dialog from '@mui/material/Dialog';
-
 import Battle from '../Battle/Battle';
 import SquadMember from '../SquadMember/SquadMember';
 import Opponent from '../Opponent/Opponent';
@@ -18,7 +17,6 @@ function Map() {
   const [monster, setMonster] = useState('')
   const [details, setDetails] = useState('')
   const [open, setOpen] = useState(false);
-
   const [toggle, setToggle] = useState(null)
 
   useEffect(() => {
@@ -42,6 +40,10 @@ function Map() {
 
   const handleClickOpen = () => {
     setOpen(true);
+    dispatch({
+      type: "SET_OPPONENT",
+      payload: monster
+    })
   };
 
   const handleClose = () => {
@@ -53,7 +55,7 @@ function Map() {
 
       <h2>Welcome, {user.username}!</h2>
 
-      <p className='margin'>Current Party:</p>
+      <p className='margin'>Current Squad:</p>
       <Card className="size" variant="outlined">
         {squad.map(monster => (
           <div className="inline padding" key={monster.id}>
@@ -73,15 +75,15 @@ function Map() {
       </Card>
 
       {toggle === true &&
-        <Opponent monster={monster} handleClickOpen={handleClickOpen} />
+          <Opponent monster={monster} handleClickOpen={handleClickOpen}/>
       }
 
       <Dialog open={open} onClose={handleClose}>
-        <Battle />
+        <Battle/>
       </Dialog>
 
       {toggle === false &&
-        <SquadMember details={details} />
+          <SquadMember details={details}/>
       }
 
     </div>

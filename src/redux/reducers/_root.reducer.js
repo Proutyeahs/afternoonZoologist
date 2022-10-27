@@ -5,6 +5,7 @@ import monsters from './monster.reducer';
 import collection from './collection.reducer';
 import squad from './squad.reducer';
 import lead from './lead.reducer';
+import opponent from './opponent.reducer';
 
 // rootReducer is the primary reducer for our entire project
 // It bundles up all of the other reducers so our project can use them.
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
   collection,
   squad,
   lead,
+  opponent,
 });
 
 export default rootReducer;

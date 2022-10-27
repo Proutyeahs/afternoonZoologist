@@ -125,6 +125,10 @@ input {
   float: right;
 }
 
+.left {
+  float: left;
+}
+
 .size {
   height: 20px;
   width: fit-content;
