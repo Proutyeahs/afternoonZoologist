@@ -6,7 +6,6 @@ function* getMonsters(action) {
     if(action.payload != undefined || action.payload > 6) {
         lvl = action.payload
     }
-    console.log(lvl)
     try {
         const monsters = yield axios.get(`/api/monster/get/${lvl}`)
         yield put({ type: 'SET_MONSTERS', payload: monsters.data })
