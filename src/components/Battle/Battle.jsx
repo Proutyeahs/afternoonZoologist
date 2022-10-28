@@ -34,6 +34,12 @@ function Battle() {
                 type: "NEW_MONSTER",
                 payload: opponent.id
             })
+            lead.opponentLvl = opponent.lvl
+            console.log()
+            dispatch({
+                type: "WIN",
+                payload: lead
+            })
         } else if (lead.type === "Air" && opponent.type === "Air") {
             dispatch({
                 type: "DEAL_DMG",

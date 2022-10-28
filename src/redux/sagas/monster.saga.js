@@ -32,7 +32,7 @@ function* updateSquad(action) {
     console.log(action.payload)
     try {
         yield axios.put('/api/monster/squad', action.payload)
-        yield put({ type: 'GET_SQUAD'})
+        yield put({ type: 'GET_SQUAD' })
     } catch (error) {
         console.log(error);
     }
@@ -57,6 +57,16 @@ function* dead(action) {
     }
 }
 
+function* win(action) {
+    console.log(action.payload)
+    try {
+        yield axios.put('/api/monster/win', action.payload)
+        yield put({ type: 'GET_SQUAD' })
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 function* monsterSaga() {
     yield takeLatest('GET_MONSTERS', getMonsters);
     yield takeLatest('CATCH_MONSTER', catchMonster)
@@ -64,6 +74,7 @@ function* monsterSaga() {
     yield takeLatest('UPDATE_SQUAD', updateSquad)
     yield takeLatest('GET_SQUAD', getSquad)
     yield takeLatest('DEAD', dead)
+    yield takeLatest('WIN', win)
 }
 
 export default monsterSaga;

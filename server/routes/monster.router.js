@@ -63,7 +63,7 @@ router.get('/', (req, res) => {
 router.post('/', rejectUnauthenticated, (req, res, next) => {
     const query = `
         INSERT INTO "monster_collection" 
-	    ("user_id", "monster_id", "gold", "hp", "att", "def", "lvl", "exp", maxhp)
+	    ("user_id", "monster_id", "gold", "hp", "att", "def", "lvl", "exp", "maxhp")
         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
     ;`;
     pool.query(query, [req.user.id, req.body.id, req.body.gold, req.body.hp, req.body.att, req.body.def, req.body.lvl, req.body.exp, req.body.maxHp]).then(() =>
@@ -145,5 +145,60 @@ router.put('/dead', rejectUnauthenticated, (req, res) => {
     });
 });
 
+router.put('/win', rejectUnauthenticated, (req, res) => {
+
+     let difference = req.body.opponentLvl - req.body.lvl
+     console.log("lvls", req.body.lvl, req.body.opponentLvl, difference)
+
+     if (difference === 0) {
+        req.body.exp += 50
+     } else if (difference === 1) {
+        req.body.exp += 60
+     } else if (difference === -1) {
+        req.body.exp += 40
+     } else if (difference === 2) {
+        req.body.exp += 70
+     } else if (difference === -2) {
+        req.body.exp += 30
+     } else if (difference === 3) {
+        req.body.exp += 80
+     } else if (difference === -3) {
+        req.body.exp += 20
+     } else if (difference === 4) {
+        req.body.exp += 90
+     } else if (difference === -4) {
+        req.body.exp += 10
+     } else if (difference >= 5) {
+        req.body.exp += 100
+     } else if (difference >= -5) {
+        req.body.exp += 5
+     }
+     console.log("exp", req.body.exp)
+     if(req.body.exp >= 100) {
+        req.body.lvl += 1
+        req.body.exp -= 100
+        req.body.maxhp += Math.floor(Math.random() * (25 - 10 + 1)) + 10
+        req.body.att += Math.floor(Math.random() * (10 - 5 + 1)) + 5
+        req.body.def += Math.floor(Math.random() * (10 - 5 + 1)) + 5
+     }
+     console.log(req.body)
+
+    const query = `
+        UPDATE "monster_collection"
+	    SET "hp" = $1,
+        "maxhp" = $1,
+	    "att" = $2,
+	    "def" = $3,
+	    "lvl" = $4,
+	    "exp" = $5
+	    WHERE ("user_id" = $6 AND "id" = $7)
+    ;`;
+    pool.query(query, [req.body.maxhp, req.body.att, req.body.def, req.body.lvl, req.body.exp, req.user.id, req.body.id]).then(() => {
+        res.sendStatus(201)
+    }).catch((err) => {
+        console.log('User registration failed: ', err);
+        res.sendStatus(500);
+    });
+});
 
 module.exports = router;
