@@ -9,7 +9,6 @@ CREATE TABLE "user" (
 CREATE TABLE "type" (
 	"id" SERIAL PRIMARY KEY,
 	"type" VARCHAR (999) NOT NULL,
-	"description" VARCHAR (9999) NOT NULL
 );
 
 CREATE TABLE "monster" (
@@ -37,13 +36,16 @@ CREATE TABLE "monster_collection" (
     "id" SERIAL PRIMARY KEY,
     "user_id" INT REFERENCES "user" NOT NULL,
     "monster_id" INT REFERENCES "monster" NOT NULL,
+    "gold" BOOLEAN NOT NULL,
     "hp" INT NOT NULL,
+    "maxhp" INT NOT NULL,
     "att" INT NOT NULL,
     "def" INT NOT NULL,
     "lvl" INT NOT NULL,
     "exp" INT NOT NULL,
-    "weapon_inventory_id" INT REFERENCES "weapon_inventory" NOT NULL,
-    "effect" BOOLEAN DEFAULT false
+    "weapon_inventory_id" INT REFERENCES "weapon_inventory",
+    "effect" BOOLEAN DEFAULT false,
+    "squad" BOOLEAN DEFAULT false
 );
 
 CREATE TABLE "effect" (
