@@ -22,7 +22,8 @@ function Map() {
 
   useEffect(() => {
     dispatch({
-      type: 'GET_MONSTERS'
+      type: 'GET_MONSTERS',
+      payload: lead.lvl
     })
     dispatch({
       type: 'GET_SQUAD'

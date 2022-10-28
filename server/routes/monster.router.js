@@ -6,7 +6,11 @@ const pool = require('../modules/pool');
 
 const router = express.Router();
 
-router.get('/', (req, res) => {
+router.get('/get/:id', (req, res) => {
+
+    let rangeTop = parseInt(req.params.id) + 5
+    let rangeBottom = parseInt(req.params.id) - 5
+
     const query = `
         SELECT "type".type, "monster".* FROM "type"
         JOIN "monster"
@@ -30,7 +34,7 @@ router.get('/', (req, res) => {
             }
 
             // basic stats so i have something to work with
-            let lvl = Math.floor(Math.random() * (5 - 1 + 1)) + 1
+            let lvl = Math.floor(Math.random() * (rangeTop - rangeBottom + 1)) + rangeBottom
             let exp = Math.floor(Math.random() * (99 - 0 + 1)) + 0
             let hp = Math.floor(Math.random() * (25 - 10 + 1)) + 10 * lvl
             let att = Math.floor(Math.random() * (10 - 5 + 1)) + 5 * lvl
