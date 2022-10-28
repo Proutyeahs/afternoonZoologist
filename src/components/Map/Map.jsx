@@ -41,10 +41,20 @@ function Map() {
   }
 
   const handleClickOpen = () => {
+
     if( lead.hp === 0) {
       return alert("Your Lead Animal is Dead")
     }
+
     setOpen(true);
+
+    if(lead.length === 0) {
+      dispatch({
+        type: 'SET_LEAD',
+        payload: squad[0]
+      })
+    }
+  
     dispatch({
       type: "SET_OPPONENT",
       payload: monster

@@ -3,7 +3,7 @@ import { put, takeLatest } from 'redux-saga/effects';
 
 function* getMonsters(action) {
     let lvl = 6;
-    if(action.payload != undefined || action.payload > 6) {
+    if(action.payload != undefined && action.payload > 6) {
         lvl = action.payload
     }
     try {
@@ -45,7 +45,6 @@ function* getSquad() {
     try {
         const squad = yield axios.get('/api/monster/squad')
         yield put({ type: 'SET_SQUAD', payload: squad.data })
-        yield put({ type: 'SET_LEAD', payload: squad.data[0] })
     } catch (error) {
         console.log(error);
     }
@@ -54,6 +53,7 @@ function* getSquad() {
 function* dead(action) {
     try {
         yield axios.put('/api/monster/dead', action.payload)
+        yield put({ type: 'GET_SQUAD' })
     } catch (error) {
         console.log(error);
     }

@@ -20,27 +20,8 @@ function Battle() {
         let dmg = Math.round(lead.att * lead.att / (lead.att + opponent.def))
         let monsterDmg = Math.round(opponent.att * opponent.att / (opponent.att + lead.def))
 
-        console.log("my dmg:", dmg, "opp Dmg", monsterDmg)
-        console.log(lead.type, opponent.type)
-
         // Eww dont look at my if statement 
-        if (lead.hp <= 0) {
-            dispatch({
-                type: "DEAD",
-                payload: lead
-            })
-        } else if (opponent.hp <= 0) {
-            dispatch({
-                type: "NEW_MONSTER",
-                payload: opponent.id
-            })
-            lead.opponentLvl = opponent.lvl
-            console.log()
-            dispatch({
-                type: "WIN",
-                payload: lead
-            })
-        } else if (lead.type === "Air" && opponent.type === "Air") {
+        if (lead.type === "Air" && opponent.type === "Air") {
             dispatch({
                 type: "DEAL_DMG",
                 payload: dmg * 1
@@ -187,13 +168,33 @@ function Battle() {
         }
     }
 
+    const dead = () => {
+        dispatch({
+            type: "DEAD",
+            payload: lead
+        })
+    }
+
+    const win = () => {
+        dispatch({
+            type: "NEW_MONSTER",
+            payload: opponent.id
+        })
+        lead.opponentLvl = opponent.lvl
+        console.log()
+        dispatch({
+            type: "WIN",
+            payload: lead
+        })
+    }
+
     const attack = () => {
         if (opponent.hp >= 0 && lead.hp >= 0) {
             return <Button color="error" size="small" variant="contained" onClick={fight}> Attack </Button>
         } else if (lead.hp <= 0) {
-            return <Button color="error" size="small" variant="contained" onClick={fight}> You Died! </Button>
+            return <Button color="error" size="small" variant="contained" onClick={dead}> You Died! </Button>
         } else if (opponent.hp <= 0) {
-            return <Button color="error" size="small" variant="contained" onClick={fight}> You Win! </Button>
+            return <Button color="error" size="small" variant="contained" onClick={win}> You Win! </Button>
         } else {
             return
         }
