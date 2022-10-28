@@ -4,6 +4,9 @@ const opponentReducer = (state = [], action) => {
             return action.payload;
         case 'UNSET_OPPONENT':
             return [];
+        case 'DEAL_DMG':
+            let hp = state.hp - action.payload
+            return {...state, hp : hp }
         default:
             return state;
     }

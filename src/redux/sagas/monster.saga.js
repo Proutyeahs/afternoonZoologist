@@ -48,12 +48,22 @@ function* getSquad() {
     }
 }
 
+function* dead(action) {
+    try {
+        yield axios.put('/api/monster/dead', action.payload)
+
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 function* monsterSaga() {
     yield takeLatest('GET_MONSTERS', getMonsters);
     yield takeLatest('CATCH_MONSTER', catchMonster)
     yield takeLatest('GET_COLLECTION', getCollection)
     yield takeLatest('UPDATE_SQUAD', updateSquad)
     yield takeLatest('GET_SQUAD', getSquad)
+    yield takeLatest('DEAD', dead)
 }
 
 export default monsterSaga;

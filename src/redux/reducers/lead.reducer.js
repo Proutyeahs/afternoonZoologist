@@ -4,6 +4,9 @@ const leadReducer = (state = [], action) => {
             return action.payload;
         case 'UNSET_LEAD':
             return [];
+        case 'TAKE_DMG':
+            let hp = state.hp - action.payload
+            return {...state, hp : hp }
         default:
             return state;
     }

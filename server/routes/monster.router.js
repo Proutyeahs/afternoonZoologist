@@ -29,6 +29,7 @@ router.get('/', (req, res) => {
                 gold = false
             }
 
+            // basic stats so i have something to work with
             let lvl = Math.floor(Math.random() * (5 - 1 + 1)) + 1
             let exp = Math.floor(Math.random() * (99 - 0 + 1)) + 0
             let hp = Math.floor(Math.random() * (25 - 10 + 1)) + 10 * lvl
@@ -44,6 +45,7 @@ router.get('/', (req, res) => {
                 gold: gold,
                 lvl: lvl,
                 exp: exp,
+                maxHp: hp,
                 hp: hp,
                 att: att,
                 def: def
@@ -61,10 +63,10 @@ router.get('/', (req, res) => {
 router.post('/', rejectUnauthenticated, (req, res, next) => {
     const query = `
         INSERT INTO "monster_collection" 
-	    ("user_id", "monster_id", "gold", "hp", "att", "def", "lvl", "exp")
-        VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+	    ("user_id", "monster_id", "gold", "hp", "att", "def", "lvl", "exp", maxhp)
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
     ;`;
-    pool.query(query, [req.user.id, req.body.id, req.body.gold, req.body.hp, req.body.att, req.body.def, req.body.lvl, req.body.exp,]).then(() =>
+    pool.query(query, [req.user.id, req.body.id, req.body.gold, req.body.hp, req.body.att, req.body.def, req.body.lvl, req.body.exp, req.body.maxHp]).then(() =>
         res.sendStatus(201)
     ).catch((err) => {
         console.log('User registration failed: ', err);
@@ -109,9 +111,9 @@ router.put('/squad', rejectUnauthenticated, (req, res) => {
         console.log('User registration failed: ', err);
         res.sendStatus(500);
     });
- });
+});
 
- router.get('/squad', rejectUnauthenticated, (req, res, next) => {
+router.get('/squad', rejectUnauthenticated, (req, res, next) => {
     const query = `
         SELECT "monster".monster, "monster".description, "type".type, "monster_collection".* 
 	    FROM "type"
@@ -128,6 +130,20 @@ router.put('/squad', rejectUnauthenticated, (req, res) => {
         res.sendStatus(500);
     });
 });
- 
+
+router.put('/dead', rejectUnauthenticated, (req, res) => {
+    const query = `
+        UPDATE "monster_collection"
+        SET "hp" = 0
+        WHERE ("user_id" = $1 AND "id" = $2)
+    ;`;
+    pool.query(query, [req.user.id, req.body.id]).then(() => {
+        res.sendStatus(201)
+    }).catch((err) => {
+        console.log('User registration failed: ', err);
+        res.sendStatus(500);
+    });
+});
+
 
 module.exports = router;

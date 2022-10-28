@@ -13,6 +13,7 @@ function Map() {
   const user = useSelector((store) => store.user);
   const monsters = useSelector((store) => store.monsters)
   const squad = useSelector((store) => store.squad)
+  const lead = useSelector((store) => store.lead)
 
   const [monster, setMonster] = useState('')
   const [details, setDetails] = useState('')
@@ -39,6 +40,9 @@ function Map() {
   }
 
   const handleClickOpen = () => {
+    if( lead.hp === 0) {
+      return alert("Your Lead Animal is Dead")
+    }
     setOpen(true);
     dispatch({
       type: "SET_OPPONENT",

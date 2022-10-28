@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Button from '@mui/material/Button';
@@ -9,15 +9,188 @@ import DialogTitle from '@mui/material/DialogTitle';
 
 function Battle() {
 
+    const dispatch = useDispatch()
+
     const lead = useSelector((store) => store.lead)
     const opponent = useSelector((store) => store.opponent)
 
     const fight = () => {
 
+        // basic dmg so i have something to work with
         let dmg = Math.round(lead.att * lead.att / (lead.att + opponent.def))
         let monsterDmg = Math.round(opponent.att * opponent.att / (opponent.att + lead.def))
-        console.log("my dmg:", dmg, "opp Dmg", monsterDmg)
 
+        console.log("my dmg:", dmg, "opp Dmg", monsterDmg)
+        console.log(lead.type, opponent.type)
+
+        // Eww dont look at my if statement 
+        if (lead.hp <= 0) {
+            dispatch({
+                type: "DEAD",
+                payload: lead
+            })
+        } else if (opponent.hp <= 0) {
+            dispatch({
+                type: "NEW_MONSTER",
+                payload: opponent.id
+            })
+        } else if (lead.type === "Air" && opponent.type === "Air") {
+            dispatch({
+                type: "DEAL_DMG",
+                payload: dmg * 1
+            })
+            dispatch({
+                type: "TAKE_DMG",
+                payload: monsterDmg * 1
+            })
+        } else if (lead.type === "Air" && opponent.type === "Earth") {
+            dispatch({
+                type: "DEAL_DMG",
+                payload: dmg * 2
+            })
+            dispatch({
+                type: "TAKE_DMG",
+                payload: monsterDmg * 0.5
+            })
+        } else if (lead.type === "Air" && opponent.type === "Fire") {
+            dispatch({
+                type: "DEAL_DMG",
+                payload: dmg * 0.5
+            })
+            dispatch({
+                type: "TAKE_DMG",
+                payload: monsterDmg * 2
+            })
+        } else if (lead.type === "Air" && opponent.type === "Water") {
+            dispatch({
+                type: "DEAL_DMG",
+                payload: dmg * 1
+            })
+            dispatch({
+                type: "TAKE_DMG",
+                payload: monsterDmg * 1
+            })
+        } else if (lead.type === "Water" && opponent.type === "Air") {
+            dispatch({
+                type: "DEAL_DMG",
+                payload: dmg * 1
+            })
+            dispatch({
+                type: "TAKE_DMG",
+                payload: monsterDmg * 1
+            })
+        } else if (lead.type === "Water" && opponent.type === "Earth") {
+            dispatch({
+                type: "DEAL_DMG",
+                payload: dmg * 0.5
+            })
+            dispatch({
+                type: "TAKE_DMG",
+                payload: monsterDmg * 2
+            })
+        } else if (lead.type === "Water" && opponent.type === "Fire") {
+            dispatch({
+                type: "DEAL_DMG",
+                payload: dmg * 2
+            })
+            dispatch({
+                type: "TAKE_DMG",
+                payload: monsterDmg * 0.5
+            })
+        } else if (lead.type === "Water" && opponent.type === "Water") {
+            dispatch({
+                type: "DEAL_DMG",
+                payload: dmg * 1
+            })
+            dispatch({
+                type: "TAKE_DMG",
+                payload: monsterDmg * 1
+            })
+        } else if (lead.type === "Fire" && opponent.type === "Air") {
+            dispatch({
+                type: "DEAL_DMG",
+                payload: dmg * 2
+            })
+            dispatch({
+                type: "TAKE_DMG",
+                payload: monsterDmg * 0.5
+            })
+        } else if (lead.type === "Fire" && opponent.type === "Earth") {
+            dispatch({
+                type: "DEAL_DMG",
+                payload: dmg * 1
+            })
+            dispatch({
+                type: "TAKE_DMG",
+                payload: monsterDmg * 1
+            })
+        } else if (lead.type === "Fire" && opponent.type === "Fire") {
+            dispatch({
+                type: "DEAL_DMG",
+                payload: dmg * 1
+            })
+            dispatch({
+                type: "TAKE_DMG",
+                payload: monsterDmg * 1
+            })
+        } else if (lead.type === "Fire" && opponent.type === "Water") {
+            dispatch({
+                type: "DEAL_DMG",
+                payload: dmg * 0.5
+            })
+            dispatch({
+                type: "TAKE_DMG",
+                payload: monsterDmg * 2
+            })
+        } else if (lead.type === "Earth" && opponent.type === "Air") {
+            dispatch({
+                type: "DEAL_DMG",
+                payload: dmg * 0.5
+            })
+            dispatch({
+                type: "TAKE_DMG",
+                payload: monsterDmg * 2
+            })
+        } else if (lead.type === "Earth" && opponent.type === "Earth") {
+            dispatch({
+                type: "DEAL_DMG",
+                payload: dmg * 1
+            })
+            dispatch({
+                type: "TAKE_DMG",
+                payload: monsterDmg * 1
+            })
+        } else if (lead.type === "Earth" && opponent.type === "Fire") {
+            dispatch({
+                type: "DEAL_DMG",
+                payload: dmg * 1
+            })
+            dispatch({
+                type: "TAKE_DMG",
+                payload: monsterDmg * 1
+            })
+        } else if (lead.type === "Earth" && opponent.type === "Water") {
+            dispatch({
+                type: "DEAL_DMG",
+                payload: dmg * 2
+            })
+            dispatch({
+                type: "TAKE_DMG",
+                payload: monsterDmg * 0.5
+            })
+        }
+    }
+
+    const attack = () => {
+        if (opponent.hp >= 0 && lead.hp >= 0) {
+            return <Button color="error" size="small" variant="contained" onClick={fight}> Attack </Button>
+        } else if (lead.hp <= 0) {
+            return <Button color="error" size="small" variant="contained" onClick={fight}> You Died! </Button>
+        } else if (opponent.hp <= 0) {
+            return <Button color="error" size="small" variant="contained" onClick={fight}> You Win! </Button>
+        } else {
+            return
+        }
     }
 
     return (
@@ -36,7 +209,7 @@ function Battle() {
                     <p>att: {lead.att}, def: {lead.def}</p>
                 </Card>
 
-                <Button color="error" size="small" variant="contained" onClick={fight}> Attack </Button>
+                {attack()}
 
                 <Card className='inline padding'>
                     <p>hp: {opponent.hp}</p>
