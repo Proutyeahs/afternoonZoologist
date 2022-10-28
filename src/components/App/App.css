@@ -145,3 +145,7 @@ input {
 .squad {
   outline: dashed purple;
 }
+
+.tame {
+  left: 80%;
+}

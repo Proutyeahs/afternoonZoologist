@@ -126,6 +126,7 @@ router.get('/squad', rejectUnauthenticated, (req, res, next) => {
 	    JOIN "monster_collection"
 	    ON "monster_collection".monster_id = "monster".id
 	    WHERE ("user_id" = $1 AND "squad" = true)
+        ORDER BY "monster_collection".lvl DESC
     ;`;
     pool.query(query, [req.user.id]).then(result => {
         res.send(result.rows)
@@ -172,9 +173,9 @@ router.put('/win', rejectUnauthenticated, (req, res) => {
         req.body.exp += 90
      } else if (difference === -4) {
         req.body.exp += 10
-     } else if (difference >= 5) {
+     } else if (difference > 4) {
         req.body.exp += 100
-     } else if (difference >= -5) {
+     } else if (difference < -4) {
         req.body.exp += 5
      }
      console.log("exp", req.body.exp)

@@ -7,7 +7,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 
-function Battle() {
+function Battle({ squad, tameAttempt, handleClose }) {
 
     const dispatch = useDispatch()
 
@@ -21,7 +21,9 @@ function Battle() {
         let monsterDmg = Math.round(opponent.att * opponent.att / (opponent.att + lead.def))
 
         // Eww dont look at my if statement 
-        if (lead.type === "Air" && opponent.type === "Air") {
+        if (lead.hp === 0) {
+            return alert("This Animal can no longer fight!")
+        } else if (lead.type === "Air" && opponent.type === "Air") {
             dispatch({
                 type: "DEAL_DMG",
                 payload: dmg * 1
@@ -173,6 +175,7 @@ function Battle() {
             type: "DEAD",
             payload: lead
         })
+        handleClose()
     }
 
     const win = () => {
@@ -186,24 +189,32 @@ function Battle() {
             type: "WIN",
             payload: lead
         })
+        handleClose()
     }
 
     const attack = () => {
-        if (opponent.hp >= 0 && lead.hp >= 0) {
+        if (opponent.hp > 0 && lead.hp > 0) {
             return <Button color="error" size="small" variant="contained" onClick={fight}> Attack </Button>
         } else if (lead.hp <= 0) {
             return <Button color="error" size="small" variant="contained" onClick={dead}> You Died! </Button>
         } else if (opponent.hp <= 0) {
             return <Button color="error" size="small" variant="contained" onClick={win}> You Win! </Button>
-        } else {
-            return
         }
     }
 
     return (
         <Box>
             <DialogTitle>
-                Battle!
+                Swap Leader:
+                <Card variant="outlined">
+                    {squad.map(monster => (
+                        <div className="inline padding" key={monster.id}>
+                            <h6 onClick={() => dispatch({
+                                type: 'SET_LEAD', payload: monster
+                            })} className={`margin inline ${monster.gold ? "gold" : ""}`}>{monster.monster}</h6>
+                        </div>
+                    ))}
+                </Card>
             </DialogTitle>
 
             <DialogContent>
@@ -216,7 +227,7 @@ function Battle() {
                     <p>att: {lead.att}, def: {lead.def}</p>
                 </Card>
 
-                {attack()}
+                <p className='inline'>:  vs  :</p>
 
                 <Card className='inline padding'>
                     <p>hp: {opponent.hp}</p>
@@ -229,6 +240,9 @@ function Battle() {
             </DialogContent>
 
             <DialogActions>
+
+                {attack()}
+                <Button color="secondary" size="small" variant="contained" onClick={tameAttempt}>Tame</Button>
 
             </DialogActions>
         </Box>

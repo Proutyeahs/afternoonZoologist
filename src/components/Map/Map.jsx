@@ -42,19 +42,21 @@ function Map() {
 
   const handleClickOpen = () => {
 
-    if( lead.hp === 0) {
-      return alert("Your Lead Animal is Dead")
-    }
+    if (squad[0].hp === 0 && squad[1].hp === 0 && squad[2].hp === 0) {
+      return alert("All Your Animals are Dead")
+    } else if (lead.hp === 0) {
+      for (let leader of squad) {
+        if (leader.hp > 0) {
+          dispatch({
+            type: 'SET_LEAD',
+            payload: leader
+          })
+        } 
+      }
+    } 
 
     setOpen(true);
 
-    if(lead.length === 0) {
-      dispatch({
-        type: 'SET_LEAD',
-        payload: squad[0]
-      })
-    }
-  
     dispatch({
       type: "SET_OPPONENT",
       payload: monster
@@ -64,6 +66,19 @@ function Map() {
   const handleClose = () => {
     setOpen(false);
   };
+
+  let odds = 15
+  const tameAttempt = () => {
+    let attempt = Math.floor(Math.random() * (odds - 1 + 1)) + 1
+    odds++
+    console.log(attempt, odds)
+    if (attempt === 1) {
+      dispatch({
+        type: 'CATCH_MONSTER',
+        payload: monster
+      })
+    }
+  }
 
   return (
     <div className="container">
@@ -90,15 +105,15 @@ function Map() {
       </Card>
 
       {toggle === true &&
-          <Opponent monster={monster} handleClickOpen={handleClickOpen}/>
+        <Opponent monster={monster} handleClickOpen={handleClickOpen} tameAttempt={tameAttempt} />
       }
 
       <Dialog open={open} onClose={handleClose}>
-        <Battle/>
+        <Battle squad={squad} tameAttempt={tameAttempt} handleClose={handleClose} />
       </Dialog>
 
       {toggle === false &&
-          <SquadMember details={details}/>
+        <SquadMember details={details} />
       }
 
     </div>

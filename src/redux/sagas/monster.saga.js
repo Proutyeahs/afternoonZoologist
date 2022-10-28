@@ -45,6 +45,7 @@ function* getSquad() {
     try {
         const squad = yield axios.get('/api/monster/squad')
         yield put({ type: 'SET_SQUAD', payload: squad.data })
+        yield put({ type: 'SET_LEAD', payload: squad.data[0] })
     } catch (error) {
         console.log(error);
     }

@@ -1,27 +1,11 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 
-function Opponent({ monster, handleClickOpen }) {
-
-    const dispatch = useDispatch()
-
-    let odds = 15
-    const tameAttempt = () => {
-        let attempt = Math.floor(Math.random() * (odds - 1 + 1)) + 1
-        odds++
-        console.log(attempt, odds)
-        if (attempt === 1) {
-            dispatch({
-                type: 'CATCH_MONSTER',
-                payload: monster
-            })
-        }
-    }
+function Opponent({ monster, handleClickOpen, tameAttempt }) {
 
     return (
         <Box sx={{ minWidth: 300, maxWidth: 300 }} className='right'>
