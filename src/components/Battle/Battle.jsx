@@ -7,7 +7,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 
-function Battle({ squad, tameAttempt, handleClose }) {
+function Battle({ squad, tameAttempt, handleClose, monsters }) {
 
     const dispatch = useDispatch()
 
@@ -180,8 +180,8 @@ function Battle({ squad, tameAttempt, handleClose }) {
 
     const win = () => {
         dispatch({
-            type: "NEW_MONSTER",
-            payload: opponent.id
+            type: "POP_MONSTER",
+            payload: opponent
         })
         lead.opponentLvl = opponent.lvl
         console.log()
@@ -189,6 +189,12 @@ function Battle({ squad, tameAttempt, handleClose }) {
             type: "WIN",
             payload: lead
         })
+        if (monsters.length === 0) {
+            dispatch({
+                type: 'GET_MONSTERS',
+                payload: lead.lvl
+            })
+        }
         handleClose()
     }
 

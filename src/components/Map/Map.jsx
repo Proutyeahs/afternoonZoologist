@@ -109,7 +109,7 @@ function Map() {
       }
 
       <Dialog open={open} onClose={handleClose}>
-        <Battle squad={squad} tameAttempt={tameAttempt} handleClose={handleClose} />
+        <Battle squad={squad} tameAttempt={tameAttempt} handleClose={handleClose} monsters={monsters}/>
       </Dialog>
 
       {toggle === false &&
