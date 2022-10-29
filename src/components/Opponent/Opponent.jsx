@@ -8,6 +8,8 @@ import Button from '@mui/material/Button';
 function Opponent({ monster, handleClickOpen, tameAttempt }) {
 
     return (
+
+        // displays opponent details
         <Box sx={{ minWidth: 300, maxWidth: 300 }} className='right'>
             <Card variant="outlined">
                 <CardContent>

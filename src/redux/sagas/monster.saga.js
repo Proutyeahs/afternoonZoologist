@@ -1,11 +1,15 @@
 import axios from 'axios';
 import { put, takeLatest } from 'redux-saga/effects';
 
+// sends get request and sets monsters to reducer
 function* getMonsters(action) {
+
+    // saves the lead monsters lvl
     let lvl = 6;
-    if(action.payload != undefined && action.payload > 6) {
+    if (action.payload != undefined && action.payload > 6) {
         lvl = action.payload
     }
+
     try {
         const monsters = yield axios.get(`/api/monster/get/${lvl}`)
         yield put({ type: 'SET_MONSTERS', payload: monsters.data })
@@ -14,6 +18,7 @@ function* getMonsters(action) {
     }
 }
 
+// sends post request with caught monsters data
 function* catchMonster(action) {
     try {
         yield axios.post('/api/monster', action.payload)
@@ -22,6 +27,7 @@ function* catchMonster(action) {
     }
 }
 
+// sends get request for caught monsters and sets them to a reducer
 function* getCollection() {
     try {
         const collection = yield axios.get('/api/monster/collection')
@@ -31,6 +37,7 @@ function* getCollection() {
     }
 }
 
+// sends put request to set users squad then gets squad
 function* updateSquad(action) {
     console.log(action.payload)
     try {
@@ -41,6 +48,7 @@ function* updateSquad(action) {
     }
 }
 
+// sends get request for monsters in your squad then saves them and a leader to reducers
 function* getSquad() {
     try {
         const squad = yield axios.get('/api/monster/squad')
@@ -51,6 +59,7 @@ function* getSquad() {
     }
 }
 
+// sends put request to set a monsters hp to 0 then runs getSquad
 function* dead(action) {
     try {
         yield axios.put('/api/monster/dead', action.payload)
@@ -60,6 +69,7 @@ function* dead(action) {
     }
 }
 
+// sends a put request to run exp/lvl gain functions then gets updated squad
 function* win(action) {
     console.log(action.payload)
     try {
@@ -70,6 +80,7 @@ function* win(action) {
     }
 }
 
+// Take latest dispatch
 function* monsterSaga() {
     yield takeLatest('GET_MONSTERS', getMonsters);
     yield takeLatest('CATCH_MONSTER', catchMonster)

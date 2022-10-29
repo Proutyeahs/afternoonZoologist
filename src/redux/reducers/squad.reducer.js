@@ -1,3 +1,5 @@
+
+// holds the squad for quick access
 const squadReducer = (state = [], action) => {
     switch (action.type) {
         case 'SET_SQUAD':

@@ -15,6 +15,7 @@ function Battle({ squad, tameAttempt, handleClose, monsters, setToggle }) {
     const lead = useSelector((store) => store.lead)
     const opponent = useSelector((store) => store.opponent)
 
+    // runs fight calculations
     const fight = () => {
 
         // basic dmg so i have something to work with
@@ -22,8 +23,11 @@ function Battle({ squad, tameAttempt, handleClose, monsters, setToggle }) {
         let monsterDmg = Math.round(opponent.att * opponent.att / (opponent.att + lead.def))
 
         // Eww dont look at my if statement 
+        // checks if leader is dead
         if (lead.hp === 0) {
             return alert("This Animal can no longer fight!")
+
+            // checks type advantage
         } else if (lead.type === "Air" && opponent.type === "Air") {
             dispatch({
                 type: "DEAL_DMG",
@@ -171,6 +175,7 @@ function Battle({ squad, tameAttempt, handleClose, monsters, setToggle }) {
         }
     }
 
+    // dispatches dead monster data
     const dead = () => {
         dispatch({
             type: "DEAD",
@@ -179,17 +184,25 @@ function Battle({ squad, tameAttempt, handleClose, monsters, setToggle }) {
         handleClose()
     }
 
+    // handles win condition
     const win = () => {
+
+        // dispatches the monster to be removed from the reducer
         dispatch({
             type: "POP_MONSTER",
             payload: opponent
         })
+
+        // appends leader lvl to the object
         lead.opponentLvl = opponent.lvl
-        console.log()
+
+        // dispatches leader data
         dispatch({
             type: "WIN",
             payload: lead
         })
+
+        // dispatches get request when the reducer is empty
         if (monsters.length === 0) {
             dispatch({
                 type: 'GET_MONSTERS',
@@ -200,6 +213,7 @@ function Battle({ squad, tameAttempt, handleClose, monsters, setToggle }) {
         handleClose()
     }
 
+    // renders attack button when monsters are alive
     const attack = () => {
         if (opponent.hp > 0 && lead.hp > 0) {
             return <Button color="error" size="small" variant="contained" onClick={fight}> Attack </Button>
@@ -210,6 +224,8 @@ function Battle({ squad, tameAttempt, handleClose, monsters, setToggle }) {
         <Box>
             <DialogTitle>
                 Swap Leader:
+
+                {/* displays your squad */}
                 <Card variant="outlined">
                     {squad.map(monster => (
                         <div className="inline padding" key={monster.id}>
@@ -223,6 +239,7 @@ function Battle({ squad, tameAttempt, handleClose, monsters, setToggle }) {
 
             <DialogContent>
 
+                {/* displays squad details */}
                 <Card className='inline padding'>
                     <p>hp: {lead.hp}</p>
                     <h4 className={`${lead.gold ? "gold" : ""}`}>{lead.monster}</h4>
@@ -233,6 +250,7 @@ function Battle({ squad, tameAttempt, handleClose, monsters, setToggle }) {
 
                 <p className='inline'>:  vs  :</p>
 
+                {/* displays opponent details */}
                 <Card className='inline padding'>
                     <p>hp: {opponent.hp}</p>
                     <h4 className={`${opponent.gold ? "gold" : ""}`}>{opponent.monster}</h4>
@@ -242,20 +260,23 @@ function Battle({ squad, tameAttempt, handleClose, monsters, setToggle }) {
                 </Card>
 
             </DialogContent>
-
             <DialogActions>
 
+                {/* displays death button */}
                 {lead.hp <= 0 &&
                     <Alert severity="success" color="error">
                         <Button color="error" size="small" variant="contained" onClick={dead}> You Died! </Button>
                     </Alert>
                 }
 
+                {/* displays win button */}
                 {opponent.hp <= 0 &&
                     <Alert severity="success" color="success">
                         <Button color="error" size="small" variant="contained" onClick={win}> You Win! </Button>
                     </Alert>
                 }
+
+                {/* displays attack button */}
                 {attack()}
                 <Button color="secondary" size="small" variant="contained" onClick={tameAttempt}>Tame</Button>
 

@@ -8,6 +8,7 @@ import Button from '@mui/material/Button';
 
 function Collection() {
 
+  // call get on load/reload
   useEffect(() => {
     dispatch({
       type: 'GET_COLLECTION'
@@ -21,13 +22,17 @@ function Collection() {
   const [monster, setMonster] = useState('')
   const [squad, setSquad] = useState([])
 
+  // holds selected squad members
   const addToSquad = () => {
 
     let index = squad.indexOf(monster)
 
+    // removes a squad member
     if (squad.includes(monster)) {
       squad.splice(index, 1)
       setMonster('')
+
+      // sets a squad member
     } else if (squad.length < 3) {
       setSquad([...squad, monster])
     } else {
@@ -35,6 +40,7 @@ function Collection() {
     }
   }
 
+  // dispatches the squad data
   const updateSquad = () => {
     dispatch({
       type: "UPDATE_SQUAD",
@@ -48,6 +54,7 @@ function Collection() {
 
       <Button className='right' color="secondary" size="small" variant="contained" onClick={updateSquad}>Confirm Squad</Button>
 
+      {/* displays monster collection */}
       <p>Animal Collection:</p>
       <Box sx={{ minWidth: 300, maxWidth: 300 }}>
         <Card variant="outlined">
@@ -59,6 +66,7 @@ function Collection() {
         </Card>
       </Box>
 
+      {/* displays monster details when true */}
       {monster !== '' &&
         <Box sx={{ minWidth: 300, maxWidth: 300 }} className='right'>
           <Card variant="outlined">

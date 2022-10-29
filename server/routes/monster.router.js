@@ -6,8 +6,10 @@ const pool = require('../modules/pool');
 
 const router = express.Router();
 
+// gets new monsters from database
 router.get('/get/:id', (req, res) => {
 
+    // sets the lvl range
     let rangeTop = parseInt(req.params.id) + 5
     let rangeBottom = parseInt(req.params.id) - 5
 
@@ -21,12 +23,13 @@ router.get('/get/:id', (req, res) => {
     pool.query(query).then(result => {
 
         let monsters = []
-
         for (let stats of result.rows) {
 
+            // rolls shiny odds
             let gold;
             let goldOdds = Math.floor(Math.random() * (9999 - 1 + 1)) + 1
 
+            // checks if shiny
             if (goldOdds === 9999) {
                 gold = true
             } else {
@@ -34,12 +37,14 @@ router.get('/get/:id', (req, res) => {
             }
 
             // basic stats so i have something to work with
+            // roll stats
             let lvl = Math.floor(Math.random() * (rangeTop - rangeBottom + 1)) + rangeBottom
             let exp = Math.floor(Math.random() * (99 - 0 + 1)) + 0
             let hp = Math.floor(Math.random() * (25 - 10 + 1)) + 10 * lvl
             let att = Math.floor(Math.random() * (10 - 5 + 1)) + 5 * lvl
             let def = Math.floor(Math.random() * (10 - 5 + 1)) + 5 * lvl
 
+            // set stats
             const monster = {
                 id: stats.id,
                 monster: stats.monster,
@@ -56,7 +61,6 @@ router.get('/get/:id', (req, res) => {
             }
             monsters.push(monster)
         }
-        console.log(monsters)
         res.send(monsters)
     }).catch(err => {
         console.log(err)
@@ -64,6 +68,7 @@ router.get('/get/:id', (req, res) => {
     })
 });
 
+// posts caught monster
 router.post('/', rejectUnauthenticated, (req, res, next) => {
     const query = `
         INSERT INTO "monster_collection" 
@@ -78,6 +83,7 @@ router.post('/', rejectUnauthenticated, (req, res, next) => {
     });
 });
 
+// gets users monster collection
 router.get('/collection', rejectUnauthenticated, (req, res, next) => {
     const query = `
         SELECT "monster".monster, "monster".description, "type".type, "monster_collection".* 
@@ -96,6 +102,7 @@ router.get('/collection', rejectUnauthenticated, (req, res, next) => {
     });
 });
 
+// updates squad members
 router.put('/squad', rejectUnauthenticated, (req, res) => {
     const query = `
         UPDATE "monster_collection"
@@ -117,6 +124,7 @@ router.put('/squad', rejectUnauthenticated, (req, res) => {
     });
 });
 
+// gets users squad
 router.get('/squad', rejectUnauthenticated, (req, res, next) => {
     const query = `
         SELECT "monster".monster, "monster".description, "type".type, "monster_collection".* 
@@ -136,6 +144,7 @@ router.get('/squad', rejectUnauthenticated, (req, res, next) => {
     });
 });
 
+// updates monsters hp to 0
 router.put('/dead', rejectUnauthenticated, (req, res) => {
     const query = `
         UPDATE "monster_collection"
@@ -150,43 +159,46 @@ router.put('/dead', rejectUnauthenticated, (req, res) => {
     });
 });
 
+// updates monsters stats
 router.put('/win', rejectUnauthenticated, (req, res) => {
 
-     let difference = req.body.opponentLvl - req.body.lvl
-     console.log("lvls", req.body.lvl, req.body.opponentLvl, difference)
+    // sets the difference between leader lvl and opponent lvl
+    let difference = req.body.opponentLvl - req.body.lvl
+    console.log("lvls", req.body.lvl, req.body.opponentLvl, difference)
 
-     if (difference === 0) {
+    // sets exp based on lvl difference 
+    if (difference === 0) {
         req.body.exp += 50
-     } else if (difference === 1) {
+    } else if (difference === 1) {
         req.body.exp += 60
-     } else if (difference === -1) {
+    } else if (difference === -1) {
         req.body.exp += 40
-     } else if (difference === 2) {
+    } else if (difference === 2) {
         req.body.exp += 70
-     } else if (difference === -2) {
+    } else if (difference === -2) {
         req.body.exp += 30
-     } else if (difference === 3) {
+    } else if (difference === 3) {
         req.body.exp += 80
-     } else if (difference === -3) {
+    } else if (difference === -3) {
         req.body.exp += 20
-     } else if (difference === 4) {
+    } else if (difference === 4) {
         req.body.exp += 90
-     } else if (difference === -4) {
+    } else if (difference === -4) {
         req.body.exp += 10
-     } else if (difference > 4) {
+    } else if (difference > 4) {
         req.body.exp += 100
-     } else if (difference < -4) {
+    } else if (difference < -4) {
         req.body.exp += 5
-     }
-     console.log("exp", req.body.exp)
-     if(req.body.exp >= 100) {
+    }
+
+    // rolls stats for lvl up
+    if (req.body.exp >= 100) {
         req.body.lvl += 1
         req.body.exp -= 100
         req.body.maxhp += Math.floor(Math.random() * (25 - 10 + 1)) + 10
         req.body.att += Math.floor(Math.random() * (10 - 5 + 1)) + 5
         req.body.def += Math.floor(Math.random() * (10 - 5 + 1)) + 5
-     }
-     console.log(req.body)
+    }
 
     const query = `
         UPDATE "monster_collection"

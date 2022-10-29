@@ -10,11 +10,14 @@ function SquadMember({ details }) {
 
     const dispatch = useDispatch()
 
+    // sets leader to reducer
     const setLead = () => {
         dispatch({ type: 'SET_LEAD', payload: details })
     }
 
     return (
+
+        // displays squad details
         <Box sx={{ minWidth: 300, maxWidth: 300 }} className='right'>
             <Card variant="outlined">
                 <CardContent>
@@ -27,6 +30,7 @@ function SquadMember({ details }) {
                 </CardActions>
             </Card>
         </Box>
+
     )
 }
 

@@ -1,3 +1,5 @@
+
+// holds the squad leader for quick access
 const leadReducer = (state = [], action) => {
     switch (action.type) {
         case 'SET_LEAD':
@@ -5,8 +7,11 @@ const leadReducer = (state = [], action) => {
         case 'UNSET_LEAD':
             return [];
         case 'TAKE_DMG':
+
+            // updates hp
             let hp = state.hp - action.payload
-            return {...state, hp : hp }
+            return { ...state, hp: hp }
+
         default:
             return state;
     }
