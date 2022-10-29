@@ -3,11 +3,12 @@ import { useSelector, useDispatch } from 'react-redux';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Button from '@mui/material/Button';
+import Alert from '@mui/material/Alert';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 
-function Battle({ squad, tameAttempt, handleClose, monsters }) {
+function Battle({ squad, tameAttempt, handleClose, monsters, setToggle }) {
 
     const dispatch = useDispatch()
 
@@ -195,16 +196,13 @@ function Battle({ squad, tameAttempt, handleClose, monsters }) {
                 payload: lead.lvl
             })
         }
+        setToggle(null)
         handleClose()
     }
 
     const attack = () => {
         if (opponent.hp > 0 && lead.hp > 0) {
             return <Button color="error" size="small" variant="contained" onClick={fight}> Attack </Button>
-        } else if (lead.hp <= 0) {
-            return <Button color="error" size="small" variant="contained" onClick={dead}> You Died! </Button>
-        } else if (opponent.hp <= 0) {
-            return <Button color="error" size="small" variant="contained" onClick={win}> You Win! </Button>
         }
     }
 
@@ -247,6 +245,17 @@ function Battle({ squad, tameAttempt, handleClose, monsters }) {
 
             <DialogActions>
 
+                {lead.hp <= 0 &&
+                    <Alert severity="success" color="error">
+                        <Button color="error" size="small" variant="contained" onClick={dead}> You Died! </Button>
+                    </Alert>
+                }
+
+                {opponent.hp <= 0 &&
+                    <Alert severity="success" color="success">
+                        <Button color="error" size="small" variant="contained" onClick={win}> You Win! </Button>
+                    </Alert>
+                }
                 {attack()}
                 <Button color="secondary" size="small" variant="contained" onClick={tameAttempt}>Tame</Button>
 
