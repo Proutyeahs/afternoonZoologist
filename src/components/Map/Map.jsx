@@ -51,9 +51,9 @@ function Map() {
             type: 'SET_LEAD',
             payload: leader
           })
-        } 
+        }
       }
-    } 
+    }
 
     setOpen(true);
 
@@ -77,6 +77,19 @@ function Map() {
         type: 'CATCH_MONSTER',
         payload: monster
       })
+      dispatch({
+        type: "POP_MONSTER",
+        payload: monster
+      })
+      setToggle(null)
+      setOpen(false);
+      if (monsters.length === 0) {
+        dispatch({
+          type: 'GET_MONSTERS',
+          payload: lead.lvl
+        })
+      }
+      alert("Animal Sucessfully Tamed!")
     }
   }
 
@@ -109,7 +122,7 @@ function Map() {
       }
 
       <Dialog open={open} onClose={handleClose}>
-        <Battle squad={squad} tameAttempt={tameAttempt} handleClose={handleClose} monsters={monsters}/>
+        <Battle squad={squad} tameAttempt={tameAttempt} handleClose={handleClose} monsters={monsters} />
       </Dialog>
 
       {toggle === false &&
