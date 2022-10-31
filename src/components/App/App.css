@@ -130,7 +130,7 @@ input {
 }
 
 .size {
-  height: 20px;
+  height: auto;
   width: fit-content;
 }
 
@@ -140,6 +140,7 @@ input {
 
 .margin {
   margin: 0%;
+  padding: 3px;
 }
 
 .squad {
@@ -148,4 +149,8 @@ input {
 
 .tame {
   left: 80%;
+}
+
+.fit {
+  width: fit-content;
 }

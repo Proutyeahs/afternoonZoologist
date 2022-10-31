@@ -49,26 +49,22 @@ function Map() {
   const handleClickOpen = () => {
 
     // checks what squad members are alive and sets the next alive member to lead reducer
-    if (squad[0].hp === 0 && squad[1].hp === 0 && squad[2].hp === 0) {
-      return alert("All Your Animals are Dead")
-    } else if (lead.hp === 0) {
-      for (let leader of squad) {
-        if (leader.hp > 0) {
-          dispatch({
-            type: 'SET_LEAD',
-            payload: leader
-          })
-        }
+    for (let member of squad) {
+      if (member.hp > 0) {
+        dispatch({ type: 'SET_LEAD', payload: member })
+        setOpen(true)
+
+        // sets the selected opponent to the reducer
+        dispatch({
+          type: "SET_OPPONENT",
+          payload: monster
+        })
+        return
       }
     }
-
-    setOpen(true);
-
-    // sets the selected opponent to the reducer
-    dispatch({
-      type: "SET_OPPONENT",
-      payload: monster
-    })
+    if (lead.hp < 1) {
+      return alert("All Your Animals are Dead")
+    }
   };
 
   // closes battle Dialog

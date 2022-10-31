@@ -195,6 +195,7 @@ function Battle({ squad, tameAttempt, handleClose, monsters, setToggle }) {
 
         // appends leader lvl to the object
         lead.opponentLvl = opponent.lvl
+        lead.opponentExp = opponent.exp
 
         // dispatches leader data
         dispatch({
@@ -219,6 +220,15 @@ function Battle({ squad, tameAttempt, handleClose, monsters, setToggle }) {
             return <Button color="error" size="small" variant="contained" onClick={fight}> Attack </Button>
         }
     }
+    const swapLeader = (monster) => {
+        if (monster.hp < 1) {
+            alert("This Animal can no longer fight!")
+        } else {
+            dispatch({
+                type: 'SET_LEAD', payload: monster
+            })
+        }
+    }
 
     return (
         <Box>
@@ -226,12 +236,10 @@ function Battle({ squad, tameAttempt, handleClose, monsters, setToggle }) {
                 Swap Leader:
 
                 {/* displays your squad */}
-                <Card variant="outlined">
+                <Card className="fit" variant="outlined">
                     {squad.map(monster => (
                         <div className="inline padding" key={monster.id}>
-                            <h6 onClick={() => dispatch({
-                                type: 'SET_LEAD', payload: monster
-                            })} className={`margin inline ${monster.gold ? "gold" : ""}`}>{monster.monster}</h6>
+                            <h6 onClick={() => swapLeader(monster)} className={`margin inline ${monster.gold ? "gold" : ""}`}>{monster.monster}</h6>
                         </div>
                     ))}
                 </Card>
@@ -240,7 +248,7 @@ function Battle({ squad, tameAttempt, handleClose, monsters, setToggle }) {
             <DialogContent>
 
                 {/* displays squad details */}
-                <Card className='inline padding'>
+                <Card sx={{ minWidth: 200, maxWidth: 150 }} className='inline padding '>
                     <p>hp: {lead.hp}</p>
                     <h4 className={`${lead.gold ? "gold" : ""}`}>{lead.monster}</h4>
                     <h5>{lead.type} type</h5>
@@ -251,7 +259,7 @@ function Battle({ squad, tameAttempt, handleClose, monsters, setToggle }) {
                 <p className='inline'>:  vs  :</p>
 
                 {/* displays opponent details */}
-                <Card className='inline padding'>
+                <Card sx={{ minWidth: 200, maxWidth: 150 }} className='inline padding'>
                     <p>hp: {opponent.hp}</p>
                     <h4 className={`${opponent.gold ? "gold" : ""}`}>{opponent.monster}</h4>
                     <h5>{opponent.type} type</h5>

@@ -112,12 +112,20 @@ router.put('/squad', rejectUnauthenticated, (req, res) => {
     const query2 = `
         UPDATE "monster_collection"
         SET "squad" = true
-        WHERE ("user_id" = $1 AND "id" = $2 OR "id" = $3 OR "id" = $4)
+        WHERE ("user_id" = $1 AND "id" = $2)
     ;`;
     pool.query(query, [req.user.id]).then(() => {
-        pool.query(query2, [req.user.id, req.body[0].id, req.body[1].id, req.body[2].id]).then(() => {
-            res.sendStatus(201)
-        })
+        if (req.body[0] != null) {
+            pool.query(query2, [req.user.id, req.body[0].id])
+        }
+        if (req.body[1] != null) {
+            pool.query(query2, [req.user.id, req.body[1].id])
+        }
+        if (req.body[2] != null) {
+            pool.query(query2, [req.user.id, req.body[2].id])
+        }
+    }).then(() => {
+        res.sendStatus(201)
     }).catch((err) => {
         console.log('User registration failed: ', err);
         res.sendStatus(500);
@@ -164,31 +172,30 @@ router.put('/win', rejectUnauthenticated, (req, res) => {
 
     // sets the difference between leader lvl and opponent lvl
     let difference = req.body.opponentLvl - req.body.lvl
-    console.log("lvls", req.body.lvl, req.body.opponentLvl, difference)
 
     // sets exp based on lvl difference 
     if (difference === 0) {
-        req.body.exp += 50
+        req.body.exp += 50 + (Math.floor(Math.random() * (req.body.opponentExp - 1 + 1)) + 1)
     } else if (difference === 1) {
-        req.body.exp += 60
+        req.body.exp += 60 + (Math.floor(Math.random() * (req.body.opponentExp - 1 + 1)) + 1)
     } else if (difference === -1) {
-        req.body.exp += 40
+        req.body.exp += 40 + (Math.floor(Math.random() * (req.body.opponentExp - 1 + 1)) + 1)
     } else if (difference === 2) {
-        req.body.exp += 70
+        req.body.exp += 70 + (Math.floor(Math.random() * (req.body.opponentExp - 1 + 1)) + 1)
     } else if (difference === -2) {
-        req.body.exp += 30
+        req.body.exp += 30 + (Math.floor(Math.random() * (req.body.opponentExp - 1 + 1)) + 1)
     } else if (difference === 3) {
-        req.body.exp += 80
+        req.body.exp += 80 + (Math.floor(Math.random() * (req.body.opponentExp - 1 + 1)) + 1)
     } else if (difference === -3) {
-        req.body.exp += 20
+        req.body.exp += 20 + (Math.floor(Math.random() * (req.body.opponentExp - 1 + 1)) + 1)
     } else if (difference === 4) {
-        req.body.exp += 90
+        req.body.exp += 90 + (Math.floor(Math.random() * (req.body.opponentExp - 1 + 1)) + 1)
     } else if (difference === -4) {
-        req.body.exp += 10
+        req.body.exp += 10 + (Math.floor(Math.random() * (req.body.opponentExp - 1 + 1)) + 1)
     } else if (difference > 4) {
-        req.body.exp += 100
+        req.body.exp += 100 + (Math.floor(Math.random() * (req.body.opponentExp - 1 + 1)) + 1)
     } else if (difference < -4) {
-        req.body.exp += 5
+        req.body.exp += 5 + (Math.floor(Math.random() * (req.body.opponentExp - 1 + 1)) + 1)
     }
 
     // rolls stats for lvl up
