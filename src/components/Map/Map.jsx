@@ -5,6 +5,7 @@ import Dialog from '@mui/material/Dialog';
 import Battle from '../Battle/Battle';
 import SquadMember from '../SquadMember/SquadMember';
 import Opponent from '../Opponent/Opponent';
+import Movement from './Movement';
 
 function Map() {
 
@@ -113,6 +114,10 @@ function Map() {
     <div className="container">
 
       <h2>Welcome, {user.username}!</h2>
+
+      <div className='right'>
+        <Movement lead={lead}/>
+      </div>
 
       {/* displays your squad */}
       <p className='margin'>Current Squad:</p>

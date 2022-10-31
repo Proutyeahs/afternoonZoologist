@@ -154,3 +154,11 @@ input {
 .fit {
   width: fit-content;
 }
+
+.center {
+   text-align: center;
+}
+
+.width {
+  width: 70%;
+}
