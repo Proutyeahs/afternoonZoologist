@@ -59,10 +59,17 @@ function Battle({ squad, tameAttempt, handleClose, monsters, setToggle }) {
                         type: "TAKE_DMG",
                         payload: monsterDmg
                     })
-                } else if (opponent.hp - dmg < 0) {
-                    win()
                 }
-            }, 500)
+                
+                // run win or lose functions
+                if (opponent.hp - dmg < 1) {
+                    console.log(opponent.hp - dmg )
+                    win()
+                } else if (lead.hp - monsterDmg < 1) {
+                    console.log(lead.hp - monsterDmg)
+                    dead()
+                }
+            }, 600)
         }
 
         // sends damage
@@ -77,10 +84,17 @@ function Battle({ squad, tameAttempt, handleClose, monsters, setToggle }) {
                         type: "DEAL_DMG",
                         payload: dmg
                     })
-                } else if (lead.hp - monsterDmg < 0) {
+                }
+                
+                // run win or lose functions
+                if (opponent.hp - dmg < 1) {
+                    console.log(opponent.hp - dmg)
+                    win()
+                } else if (lead.hp - monsterDmg < 1) {
+                    console.log(lead.hp - monsterDmg)
                     dead()
                 }
-            }, 500)
+            }, 600)
         }
         console.log("my att", dmg, "opp att", monsterDmg)
     }
