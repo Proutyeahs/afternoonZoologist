@@ -52,6 +52,8 @@ router.get('/get/:id', (req, res) => {
             let hp = statRoll(10, 2)
             let att = statRoll(5, 1)
             let def = statRoll(5, 1)
+            let spd = statRoll(5, 1)
+            let res = statRoll(5, 1)
 
             // set stats
             const monster = {
@@ -66,7 +68,9 @@ router.get('/get/:id', (req, res) => {
                 maxHp: hp,
                 hp: hp,
                 att: att,
-                def: def
+                def: def,
+                res: res,
+                spd: spd
             }
             monsters.push(monster)
         }
@@ -81,10 +85,10 @@ router.get('/get/:id', (req, res) => {
 router.post('/', rejectUnauthenticated, (req, res, next) => {
     const query = `
         INSERT INTO "monster_collection" 
-	    ("user_id", "monster_id", "gold", "hp", "att", "def", "lvl", "exp", "maxhp")
-        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+	    ("user_id", "monster_id", "gold", "hp", "att", "def", "lvl", "exp", "maxhp", "spd", "res")
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
     ;`;
-    pool.query(query, [req.user.id, req.body.id, req.body.gold, req.body.hp, req.body.att, req.body.def, req.body.lvl, req.body.exp, req.body.maxHp]).then(() =>
+    pool.query(query, [req.user.id, req.body.id, req.body.gold, req.body.hp, req.body.att, req.body.def, req.body.lvl, req.body.exp, req.body.maxHp, req.body.spd, req.body.res]).then(() =>
         res.sendStatus(201)
     ).catch((err) => {
         console.log('User registration failed: ', err);
@@ -214,6 +218,8 @@ router.put('/win', rejectUnauthenticated, (req, res) => {
         req.body.maxhp += Math.floor(Math.random() * (10 - 2 + 1)) + 2
         req.body.att += Math.floor(Math.random() * (5 - 1 + 1)) + 1
         req.body.def += Math.floor(Math.random() * (5 - 1 + 1)) + 1
+        req.body.spd += Math.floor(Math.random() * (5 - 1 + 1)) + 1
+        req.body.res += Math.floor(Math.random() * (5 - 1 + 1)) + 1
     }
 
     const query = `
@@ -223,10 +229,12 @@ router.put('/win', rejectUnauthenticated, (req, res) => {
 	    "att" = $2,
 	    "def" = $3,
 	    "lvl" = $4,
-	    "exp" = $5
+	    "exp" = $5,
+        "spd" = $8,
+        "res" = $9
 	    WHERE ("user_id" = $6 AND "id" = $7)
     ;`;
-    pool.query(query, [req.body.maxhp, req.body.att, req.body.def, req.body.lvl, req.body.exp, req.user.id, req.body.id]).then(() => {
+    pool.query(query, [req.body.maxhp, req.body.att, req.body.def, req.body.lvl, req.body.exp, req.user.id, req.body.id, req.body.spd, req.body.res]).then(() => {
         res.sendStatus(201)
     }).catch((err) => {
         console.log('User registration failed: ', err);

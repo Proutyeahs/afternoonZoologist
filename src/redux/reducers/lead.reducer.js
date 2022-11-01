@@ -10,6 +10,9 @@ const leadReducer = (state = [], action) => {
 
             // updates hp
             let hp = state.hp - action.payload
+            if(hp < 0) {
+                hp = 0
+            }
             return { ...state, hp: hp }
 
         default:

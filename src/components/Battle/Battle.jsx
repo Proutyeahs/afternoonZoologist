@@ -22,157 +22,71 @@ function Battle({ squad, tameAttempt, handleClose, monsters, setToggle }) {
         let dmg = Math.round(lead.att * lead.att / (lead.att + opponent.def))
         let monsterDmg = Math.round(opponent.att * opponent.att / (opponent.att + lead.def))
 
-        // Eww dont look at my if statement 
         // checks if leader is dead
         if (lead.hp === 0) {
             return alert("This Animal can no longer fight!")
 
-            // checks type advantage
-        } else if (lead.type === "Air" && opponent.type === "Air") {
-            dispatch({
-                type: "DEAL_DMG",
-                payload: dmg * 1
-            })
-            dispatch({
-                type: "TAKE_DMG",
-                payload: monsterDmg * 1
-            })
-        } else if (lead.type === "Air" && opponent.type === "Earth") {
-            dispatch({
-                type: "DEAL_DMG",
-                payload: dmg * 2
-            })
-            dispatch({
-                type: "TAKE_DMG",
-                payload: monsterDmg * 0.5
-            })
-        } else if (lead.type === "Air" && opponent.type === "Fire") {
-            dispatch({
-                type: "DEAL_DMG",
-                payload: dmg * 0.5
-            })
-            dispatch({
-                type: "TAKE_DMG",
-                payload: monsterDmg * 2
-            })
-        } else if (lead.type === "Air" && opponent.type === "Water") {
-            dispatch({
-                type: "DEAL_DMG",
-                payload: dmg * 1
-            })
-            dispatch({
-                type: "TAKE_DMG",
-                payload: monsterDmg * 1
-            })
-        } else if (lead.type === "Water" && opponent.type === "Air") {
-            dispatch({
-                type: "DEAL_DMG",
-                payload: dmg * 1
-            })
-            dispatch({
-                type: "TAKE_DMG",
-                payload: monsterDmg * 1
-            })
-        } else if (lead.type === "Water" && opponent.type === "Earth") {
-            dispatch({
-                type: "DEAL_DMG",
-                payload: dmg * 0.5
-            })
-            dispatch({
-                type: "TAKE_DMG",
-                payload: monsterDmg * 2
-            })
-        } else if (lead.type === "Water" && opponent.type === "Fire") {
-            dispatch({
-                type: "DEAL_DMG",
-                payload: dmg * 2
-            })
-            dispatch({
-                type: "TAKE_DMG",
-                payload: monsterDmg * 0.5
-            })
-        } else if (lead.type === "Water" && opponent.type === "Water") {
-            dispatch({
-                type: "DEAL_DMG",
-                payload: dmg * 1
-            })
-            dispatch({
-                type: "TAKE_DMG",
-                payload: monsterDmg * 1
-            })
-        } else if (lead.type === "Fire" && opponent.type === "Air") {
-            dispatch({
-                type: "DEAL_DMG",
-                payload: dmg * 2
-            })
-            dispatch({
-                type: "TAKE_DMG",
-                payload: monsterDmg * 0.5
-            })
-        } else if (lead.type === "Fire" && opponent.type === "Earth") {
-            dispatch({
-                type: "DEAL_DMG",
-                payload: dmg * 1
-            })
-            dispatch({
-                type: "TAKE_DMG",
-                payload: monsterDmg * 1
-            })
-        } else if (lead.type === "Fire" && opponent.type === "Fire") {
-            dispatch({
-                type: "DEAL_DMG",
-                payload: dmg * 1
-            })
-            dispatch({
-                type: "TAKE_DMG",
-                payload: monsterDmg * 1
-            })
-        } else if (lead.type === "Fire" && opponent.type === "Water") {
-            dispatch({
-                type: "DEAL_DMG",
-                payload: dmg * 0.5
-            })
-            dispatch({
-                type: "TAKE_DMG",
-                payload: monsterDmg * 2
-            })
-        } else if (lead.type === "Earth" && opponent.type === "Air") {
-            dispatch({
-                type: "DEAL_DMG",
-                payload: dmg * 0.5
-            })
-            dispatch({
-                type: "TAKE_DMG",
-                payload: monsterDmg * 2
-            })
-        } else if (lead.type === "Earth" && opponent.type === "Earth") {
-            dispatch({
-                type: "DEAL_DMG",
-                payload: dmg * 1
-            })
-            dispatch({
-                type: "TAKE_DMG",
-                payload: monsterDmg * 1
-            })
-        } else if (lead.type === "Earth" && opponent.type === "Fire") {
-            dispatch({
-                type: "DEAL_DMG",
-                payload: dmg * 1
-            })
-            dispatch({
-                type: "TAKE_DMG",
-                payload: monsterDmg * 1
-            })
-        } else if (lead.type === "Earth" && opponent.type === "Water") {
-            dispatch({
-                type: "DEAL_DMG",
-                payload: dmg * 2
-            })
-            dispatch({
-                type: "TAKE_DMG",
-                payload: monsterDmg * 0.5
-            })
+        // checks type advantage
+        } else if (
+            lead.type === "Fire" && opponent.type === "Air" ||
+            lead.type === "Earth" && opponent.type === "Water" ||
+            lead.type === "Water" && opponent.type === "Fire" ||
+            lead.type === "Air" && opponent.type === "Earth"
+        ) {
+            dmg = Math.round(dmg *= 1.2)
+            monsterDmg = Math.round(monsterDmg *= 0.8)
+            console.log("advantage")
+        } else if (
+            lead.type === "Fire" && opponent.type === "Water" ||
+            lead.type === "Earth" && opponent.type === "Air" ||
+            lead.type === "Water" && opponent.type === "Earth" ||
+            lead.type === "Air" && opponent.type === "Fire"
+        ) {
+            dmg = Math.round(dmg * 0.8)
+            monsterDmg = Math.round(monsterDmg * 1.2)
+            console.log("disadvantage")
         }
+
+        // sends damage
+        if (lead.spd > opponent.spd) {
+            dispatch({
+                type: "DEAL_DMG",
+                payload: dmg
+            })
+            setTimeout(() => {
+                if (opponent.hp - dmg > 0) {
+                    dispatch({
+                        type: "TAKE_DMG",
+                        payload: monsterDmg
+                    })
+                } else if (opponent.hp - dmg < 0) {
+                    setTimeout(() => {
+                        win()
+                    }, 8000)
+                }
+            }, 500)
+        }
+
+        // sends damage
+        if (lead.spd < opponent.spd) {
+            dispatch({
+                type: "TAKE_DMG",
+                payload: monsterDmg
+            })
+            setTimeout(() => {
+                if (lead.hp - monsterDmg > 0) {
+                    dispatch({
+                        type: "DEAL_DMG",
+                        payload: dmg
+                    })
+                } else if (lead.hp - monsterDmg < 0) {
+                    setTimeout(() => {
+                        dead()
+                    }, 8000)
+                }
+            }, 500)
+        }
+        console.log("my att", dmg, "opp att", monsterDmg)
     }
 
     // dispatches dead monster data
@@ -262,10 +176,10 @@ function Battle({ squad, tameAttempt, handleClose, monsters, setToggle }) {
 
                 {/* displays squad details */}
                 <Card sx={{ minWidth: 200, maxWidth: 150 }} className='inline padding '>
-                    <p>hp: {lead.hp}</p>
+                    <p>hp: {lead.hp}/{lead.maxhp}</p>
                     <h4 className={`${lead.gold ? "gold" : ""}`}>{lead.monster}</h4>
+                    <h6 className=" margin right">lvl.{lead.lvl} {lead.exp}/100</h6>
                     <h5>{lead.type} type</h5>
-                    <p>lvl: {lead.lvl}, exp: {lead.exp}</p>
                     <p>att: {lead.att}, def: {lead.def}</p>
                 </Card>
 
@@ -273,10 +187,10 @@ function Battle({ squad, tameAttempt, handleClose, monsters, setToggle }) {
 
                 {/* displays opponent details */}
                 <Card sx={{ minWidth: 200, maxWidth: 150 }} className='inline padding'>
-                    <p>hp: {opponent.hp}</p>
+                    <p>hp: {opponent.hp}/{opponent.maxHp}</p>
                     <h4 className={`${opponent.gold ? "gold" : ""}`}>{opponent.monster}</h4>
+                    <h6 className=" margin right">lvl.{opponent.lvl} {opponent.exp}/100</h6>
                     <h5>{opponent.type} type</h5>
-                    <p>lvl: {opponent.lvl}, exp: {opponent.exp}</p>
                     <p>att: {opponent.att}, def: {opponent.def}</p>
                 </Card>
 

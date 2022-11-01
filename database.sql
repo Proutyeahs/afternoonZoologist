@@ -57,6 +57,8 @@ CREATE TABLE "monster_collection" (
     "maxhp" INT NOT NULL,
     "att" INT NOT NULL,
     "def" INT NOT NULL,
+	"spd" INT NOT NULL,
+    "res" INT NOT NULL,
     "lvl" INT NOT NULL,
     "exp" INT NOT NULL,
     "weapon_inventory_id" INT REFERENCES "weapon_inventory",
