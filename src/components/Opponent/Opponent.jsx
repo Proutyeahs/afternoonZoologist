@@ -13,9 +13,10 @@ function Opponent({ monster, handleClickOpen, tameAttempt }) {
         <Box sx={{ minWidth: 300, maxWidth: 300 }} className='right'>
             <Card variant="outlined">
                 <CardContent>
-                    <h4 className={`inline ${monster.gold ? "gold" : ""}`}>{monster.monster}</h4>, <h5 className='inline'>{monster.type} type</h5>
+                    <h6 className=" margin right">lvl.{monster.lvl} ({monster.exp}/100)</h6>
+                    <h4 className={`${monster.gold ? "gold" : ""}`}>{monster.monster}</h4>
+                    <h5>{monster.type} type</h5>
                     <p>{monster.description}</p>
-                    <p>lvl: {monster.lvl}, exp: {monster.exp}, hp: {monster.hp}, att: {monster.att}, def: {monster.def}</p>
                 </CardContent>
                 <CardActions>
                     <Button color="secondary" size="small" variant="contained" onClick={tameAttempt}>Tame</Button>

@@ -21,9 +21,10 @@ function SquadMember({ details }) {
         <Box sx={{ minWidth: 300, maxWidth: 300 }} className='right'>
             <Card variant="outlined">
                 <CardContent>
-                    <h4 className={`inline ${details.gold ? "gold" : ""}`}>{details.monster}</h4>, <h5 className='inline'>{details.type} type</h5>
+                    <h6 className=" margin right">lvl.{details.lvl} ({details.exp}/100)</h6>
+                    <h4 className={`${details.gold ? "gold" : ""}`}>{details.monster}</h4>
+                    <h5>{details.type} type</h5>
                     <p>{details.description}</p>
-                    <p>lvl: {details.lvl}, exp: {details.exp}, hp: {details.hp}, att: {details.att}, def: {details.def}</p>
                 </CardContent>
                 <CardActions>
                     <Button color="secondary" size="small" variant="contained" onClick={setLead}>Lead</Button>

@@ -60,9 +60,7 @@ function Battle({ squad, tameAttempt, handleClose, monsters, setToggle }) {
                         payload: monsterDmg
                     })
                 } else if (opponent.hp - dmg < 0) {
-                    setTimeout(() => {
-                        win()
-                    }, 8000)
+                    win()
                 }
             }, 500)
         }
@@ -80,9 +78,7 @@ function Battle({ squad, tameAttempt, handleClose, monsters, setToggle }) {
                         payload: dmg
                     })
                 } else if (lead.hp - monsterDmg < 0) {
-                    setTimeout(() => {
-                        dead()
-                    }, 8000)
+                    dead()
                 }
             }, 500)
         }
@@ -95,7 +91,6 @@ function Battle({ squad, tameAttempt, handleClose, monsters, setToggle }) {
             type: "DEAD",
             payload: lead
         })
-        handleClose()
     }
 
     // handles win condition
@@ -125,7 +120,6 @@ function Battle({ squad, tameAttempt, handleClose, monsters, setToggle }) {
             })
         }
         setToggle(null)
-        handleClose()
     }
 
     // renders attack button when monsters are alive
@@ -151,7 +145,7 @@ function Battle({ squad, tameAttempt, handleClose, monsters, setToggle }) {
         if (lead.hp < 1 && opponent.hp > 0) {
             return (
                 <Alert severity="success" color="error">
-                    <Button color="error" size="small" variant="contained" onClick={dead}> You Died! </Button>
+                    <Button color="error" size="small" variant="contained" onClick={handleClose}> You Died! </Button>
                 </Alert>
             )
         }
@@ -180,7 +174,6 @@ function Battle({ squad, tameAttempt, handleClose, monsters, setToggle }) {
                     <h4 className={`${lead.gold ? "gold" : ""}`}>{lead.monster}</h4>
                     <h6 className=" margin right">lvl.{lead.lvl} {lead.exp}/100</h6>
                     <h5>{lead.type} type</h5>
-                    <p>att: {lead.att}, def: {lead.def}</p>
                 </Card>
 
                 <p className='inline'>:  vs  :</p>
@@ -191,7 +184,6 @@ function Battle({ squad, tameAttempt, handleClose, monsters, setToggle }) {
                     <h4 className={`${opponent.gold ? "gold" : ""}`}>{opponent.monster}</h4>
                     <h6 className=" margin right">lvl.{opponent.lvl} {opponent.exp}/100</h6>
                     <h5>{opponent.type} type</h5>
-                    <p>att: {opponent.att}, def: {opponent.def}</p>
                 </Card>
 
             </DialogContent>
@@ -203,7 +195,7 @@ function Battle({ squad, tameAttempt, handleClose, monsters, setToggle }) {
                 {/* displays win button */}
                 {opponent.hp <= 0 &&
                     <Alert severity="success" color="success">
-                        <Button color="error" size="small" variant="contained" onClick={win}> You Win! </Button>
+                        <Button color="error" size="small" variant="contained" onClick={handleClose}> You Win! </Button>
                     </Alert>
                 }
 
