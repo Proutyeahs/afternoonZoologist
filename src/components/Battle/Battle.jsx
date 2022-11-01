@@ -48,7 +48,7 @@ function Battle({ squad, tameAttempt, handleClose, monsters, setToggle }) {
         }
 
         // sends damage
-        if (lead.spd > opponent.spd) {
+        if (lead.spd >= opponent.spd) {
             dispatch({
                 type: "DEAL_DMG",
                 payload: dmg
