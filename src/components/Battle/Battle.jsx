@@ -220,6 +220,8 @@ function Battle({ squad, tameAttempt, handleClose, monsters, setToggle }) {
             return <Button color="error" size="small" variant="contained" onClick={fight}> Attack </Button>
         }
     }
+
+    // sets new leader if its alive
     const swapLeader = (monster) => {
         if (monster.hp < 1) {
             alert("This Animal can no longer fight!")
@@ -227,6 +229,17 @@ function Battle({ squad, tameAttempt, handleClose, monsters, setToggle }) {
             dispatch({
                 type: 'SET_LEAD', payload: monster
             })
+        }
+    }
+
+    // renders death button
+    const youDied = () => {
+        if (lead.hp < 1 && opponent.hp > 0) {
+            return (
+                <Alert severity="success" color="error">
+                    <Button color="error" size="small" variant="contained" onClick={dead}> You Died! </Button>
+                </Alert>
+            )
         }
     }
 
@@ -271,11 +284,7 @@ function Battle({ squad, tameAttempt, handleClose, monsters, setToggle }) {
             <DialogActions>
 
                 {/* displays death button */}
-                {lead.hp <= 0 &&
-                    <Alert severity="success" color="error">
-                        <Button color="error" size="small" variant="contained" onClick={dead}> You Died! </Button>
-                    </Alert>
-                }
+                {youDied()}
 
                 {/* displays win button */}
                 {opponent.hp <= 0 &&

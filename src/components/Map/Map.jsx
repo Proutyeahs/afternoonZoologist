@@ -6,6 +6,7 @@ import Battle from '../Battle/Battle';
 import SquadMember from '../SquadMember/SquadMember';
 import Opponent from '../Opponent/Opponent';
 import Movement from './Movement';
+import Grid from './Grid';
 
 function Map() {
 
@@ -79,7 +80,9 @@ function Map() {
 
     // sets attempt value on click
     let attempt = Math.floor(Math.random() * (odds - 1 + 1)) + 1
-    odds++
+    if (odds < 40) {
+      odds++
+    }
     console.log(attempt, odds)
 
     if (attempt === 1) {
@@ -116,7 +119,7 @@ function Map() {
       <h2>Welcome, {user.username}!</h2>
 
       <div className='right'>
-        <Movement lead={lead}/>
+        <Movement lead={lead} />
       </div>
 
       {/* displays your squad */}
@@ -139,6 +142,8 @@ function Map() {
           </div>
         ))}
       </Card>
+
+      <Grid />
 
       {/* displays Opponent details */}
       {toggle === true &&

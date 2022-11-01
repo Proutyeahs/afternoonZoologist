@@ -40,9 +40,18 @@ router.get('/get/:id', (req, res) => {
             // roll stats
             let lvl = Math.floor(Math.random() * (rangeTop - rangeBottom + 1)) + rangeBottom
             let exp = Math.floor(Math.random() * (99 - 0 + 1)) + 0
-            let hp = Math.floor(Math.random() * (25 - 10 + 1)) + 10 * lvl
-            let att = Math.floor(Math.random() * (10 - 5 + 1)) + 5 * lvl
-            let def = Math.floor(Math.random() * (10 - 5 + 1)) + 5 * lvl
+
+            let statRoll = (x, y) => {
+                stat = 0;
+                for (let i = 0; i < lvl; i++) {
+                    stat += Math.floor(Math.random() * (x - y + 1)) + y
+                }
+                return stat
+            }
+
+            let hp = statRoll(10, 2)
+            let att = statRoll(5, 1)
+            let def = statRoll(5, 1)
 
             // set stats
             const monster = {
@@ -202,9 +211,9 @@ router.put('/win', rejectUnauthenticated, (req, res) => {
     if (req.body.exp >= 100) {
         req.body.lvl += 1
         req.body.exp -= 100
-        req.body.maxhp += Math.floor(Math.random() * (25 - 10 + 1)) + 10
-        req.body.att += Math.floor(Math.random() * (10 - 5 + 1)) + 5
-        req.body.def += Math.floor(Math.random() * (10 - 5 + 1)) + 5
+        req.body.maxhp += Math.floor(Math.random() * (10 - 2 + 1)) + 2
+        req.body.att += Math.floor(Math.random() * (5 - 1 + 1)) + 1
+        req.body.def += Math.floor(Math.random() * (5 - 1 + 1)) + 1
     }
 
     const query = `
