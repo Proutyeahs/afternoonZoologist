@@ -13,7 +13,7 @@ function HpBar({ stats }) {
     const health = () => {
         let bar = []
         for (let i = 0; i < hp; i++) {
-            bar.push(<div className='health'></div>)
+            bar.push(<div className='health' key={i}></div>)
         }
         return bar
     }
