@@ -52,18 +52,12 @@ function Map() {
 
     // checks what squad members are alive and sets the next alive member to lead reducer
     for (let member of squad) {
-      if (lead.hp > 0) {
-        dispatch({
-          type: "SET_OPPONENT",
-          payload: monster
-        })
-        lead.hp = lead.maxhp
-        return setOpen(true)
-      } else if (member.hp > 0) {
+      if (member.hp > 0) {
         dispatch({
           type: 'SET_LEAD',
           payload: member
         })
+        setOpen(true)
 
         // sets the selected opponent to the reducer
         dispatch({

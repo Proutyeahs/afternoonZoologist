@@ -11,9 +11,9 @@ function SquadMember({ details }) {
     const dispatch = useDispatch()
 
     // sets leader to reducer
-    const setLead = () => {
-        dispatch({ type: 'SET_LEAD', payload: details })
-    }
+    // const setLead = () => {
+    //     dispatch({ type: 'SET_LEAD', payload: details })
+    // }
 
     return (
 
@@ -26,9 +26,9 @@ function SquadMember({ details }) {
                     <h5>{details.type} type</h5>
                     <p>{details.description}</p>
                 </CardContent>
-                <CardActions>
+                {/* <CardActions>
                     <Button color="secondary" size="small" variant="contained" onClick={setLead}>Lead</Button>
-                </CardActions>
+                </CardActions> */}
             </Card>
         </Box>
 
