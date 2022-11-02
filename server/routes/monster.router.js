@@ -65,7 +65,7 @@ router.get('/get/:id', (req, res) => {
                 gold: gold,
                 lvl: lvl,
                 exp: exp,
-                maxHp: hp,
+                maxhp: hp,
                 hp: hp,
                 att: att,
                 def: def,
@@ -88,7 +88,7 @@ router.post('/', rejectUnauthenticated, (req, res, next) => {
 	    ("user_id", "monster_id", "gold", "hp", "att", "def", "lvl", "exp", "maxhp", "spd", "res")
         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
     ;`;
-    pool.query(query, [req.user.id, req.body.id, req.body.gold, req.body.hp, req.body.att, req.body.def, req.body.lvl, req.body.exp, req.body.maxHp, req.body.spd, req.body.res]).then(() =>
+    pool.query(query, [req.user.id, req.body.id, req.body.gold, req.body.hp, req.body.att, req.body.def, req.body.lvl, req.body.exp, req.body.maxhp, req.body.spd, req.body.res]).then(() =>
         res.sendStatus(201)
     ).catch((err) => {
         console.log('User registration failed: ', err);
@@ -97,7 +97,7 @@ router.post('/', rejectUnauthenticated, (req, res, next) => {
 });
 
 // gets users monster collection
-router.get('/collection', rejectUnauthenticated, (req, res, next) => {
+router.get('/collection', rejectUnauthenticated, (req, res) => {
     const query = `
         SELECT "monster".monster, "monster".description, "type".type, "monster_collection".* 
 	    FROM "type"

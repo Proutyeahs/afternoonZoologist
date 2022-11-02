@@ -172,3 +172,20 @@ input {
   margin: 5px;
   border-radius: 2px;
 }
+
+.health {
+  display: inline-block;
+  height: 10px;
+  width: 2px;
+  background-color: rgba(0, 136, 167, 0.999);
+  text-align: center;
+}
+
+.bar {
+  display: flex;
+  width: 200px;
+  height: 10px;
+  border-radius: 2px;
+  outline: solid black;
+  margin: 0%;
+}

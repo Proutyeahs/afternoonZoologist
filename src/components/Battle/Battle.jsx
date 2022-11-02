@@ -7,6 +7,7 @@ import Alert from '@mui/material/Alert';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
+import HpBar from './HpBar';
 
 function Battle({ squad, tameAttempt, handleClose, monsters, setToggle }) {
 
@@ -60,10 +61,10 @@ function Battle({ squad, tameAttempt, handleClose, monsters, setToggle }) {
                         payload: monsterDmg
                     })
                 }
-                
+
                 // run win or lose functions
                 if (opponent.hp - dmg < 1) {
-                    console.log(opponent.hp - dmg )
+                    console.log(opponent.hp - dmg)
                     win()
                 } else if (lead.hp - monsterDmg < 1) {
                     console.log(lead.hp - monsterDmg)
@@ -85,7 +86,7 @@ function Battle({ squad, tameAttempt, handleClose, monsters, setToggle }) {
                         payload: dmg
                     })
                 }
-                
+
                 // run win or lose functions
                 if (opponent.hp - dmg < 1) {
                     console.log(opponent.hp - dmg)
@@ -184,7 +185,11 @@ function Battle({ squad, tameAttempt, handleClose, monsters, setToggle }) {
 
                 {/* displays squad details */}
                 <Card sx={{ minWidth: 200, maxWidth: 150 }} className='inline padding '>
-                    <p>hp: {lead.hp}/{lead.maxhp}</p>
+                    <h6 className='right margin'>hp: {lead.hp}/{lead.maxhp}</h6>
+
+                    {/* displays health bar */}
+                    <HpBar stats={lead} />
+
                     <h4 className={`${lead.gold ? "gold" : ""}`}>{lead.monster}</h4>
                     <h6 className=" margin right">lvl.{lead.lvl} {lead.exp}/100</h6>
                     <h5>{lead.type} type</h5>
@@ -194,7 +199,11 @@ function Battle({ squad, tameAttempt, handleClose, monsters, setToggle }) {
 
                 {/* displays opponent details */}
                 <Card sx={{ minWidth: 200, maxWidth: 150 }} className='inline padding'>
-                    <p>hp: {opponent.hp}/{opponent.maxHp}</p>
+                    <h6 className='right margin'>hp: {opponent.hp}/{opponent.maxhp}</h6>
+
+                    {/* displays health bar */}
+                    <HpBar stats={opponent} />
+
                     <h4 className={`${opponent.gold ? "gold" : ""}`}>{opponent.monster}</h4>
                     <h6 className=" margin right">lvl.{opponent.lvl} {opponent.exp}/100</h6>
                     <h5>{opponent.type} type</h5>
