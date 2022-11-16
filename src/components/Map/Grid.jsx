@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import userReducer from "../../redux/reducers/user.reducer";
 
 function Grid() {
 
@@ -16,12 +15,14 @@ function Grid() {
         })
     }, []);
 
-    let number = [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }, { id: 5 }, { id: 2 }, { id: 3 }, { id: 4 }, { id: 2 }, { id: 3 }, { id: 4 }, { id: 2 }, { id: 3 }, { id: 4 }, { id: 2 }, { id: 3 }, { id: 4 }, { id: 2 }, { id: 3 }, { id: 4 }, { id: 2 }, { id: 3 }, { id: 4 }, { id: 2 }, { id: 3 }, { id: 4 }, { id: 2 }, { id: 3 }, { id: 4 }, { id: 4 }];
+    // This will use the map data from the database
+    let number = [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }, { id: 5 }];
+
     return (
         <>
             <div className="grid">
                 {number.map(num => (
-                    <div className="imageGrid"></div>
+                    <div key={num.id} className="imageGrid"></div>
                 ))}
             </div>
         </>
