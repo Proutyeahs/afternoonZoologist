@@ -84,3 +84,22 @@ CREATE TABLE "item_inventory" (
 	"user_id" INT REFERENCES "user" NOT NULL, 
 	"item_id" INT REFERENCES "item" NOT NULL
 );
+
+CREATE TABLE "event" (
+	"id" SERIAL PRIMARY KEY,
+	"event" VARCHAR(999) NOT NULL, 
+	"description" VARCHAR(9999)
+);
+
+CREATE TABLE "map" (
+	"id" SERIAL PRIMARY KEY,
+	"map_section" VARCHAR(999) NOT NULL, 
+	"description" VARCHAR(9999),
+	"event_id" INT REFERENCES "event" NOT NULL
+);
+
+CREATE TABLE "userLocation" (
+	"id" SERIAL PRIMARY KEY,
+	"user_id" INT REFERENCES "user" NOT NULL,
+	"map_id" INT REFERENCES "map" NOT NULL
+);

@@ -18,7 +18,7 @@ function SquadMember({ details }) {
     return (
 
         // displays squad details
-        <Box sx={{ minWidth: 300, maxWidth: 300 }} className='right'>
+        <Box sx={{ minWidth: 250, maxWidth: 250 }} className='inline right'>
             <Card variant="outlined">
                 <CardContent>
                     <h6 className=" margin right">lvl.{details.lvl} ({details.exp}/100)</h6>

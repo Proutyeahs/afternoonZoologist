@@ -118,9 +118,6 @@ function Map() {
 
   return (
     <div className="container">
-
-      <h2>Welcome, {user.username}!</h2>
-
       <div className='right'>
         <Movement lead={lead} />
       </div>

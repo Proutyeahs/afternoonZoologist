@@ -167,10 +167,14 @@ input {
   height: 20px;
   width: 20px;
   display: inline-block;
-  background-color: gray;
   outline: solid black;
-  margin: 5px;
-  border-radius: 2px;
+  margin: 2px;
+  border-radius: 1px;
+}
+
+.grid {
+  width: 720px;
+  display: inline-block;
 }
 
 .health {

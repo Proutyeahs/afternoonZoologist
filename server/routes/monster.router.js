@@ -82,7 +82,7 @@ router.get('/get/:id', (req, res) => {
 });
 
 // posts caught monster
-router.post('/', rejectUnauthenticated, (req, res, next) => {
+router.post('/', rejectUnauthenticated, (req, res) => {
     const query = `
         INSERT INTO "monster_collection" 
 	    ("user_id", "monster_id", "gold", "hp", "att", "def", "lvl", "exp", "maxhp", "spd", "res")
@@ -91,7 +91,7 @@ router.post('/', rejectUnauthenticated, (req, res, next) => {
     pool.query(query, [req.user.id, req.body.id, req.body.gold, req.body.hp, req.body.att, req.body.def, req.body.lvl, req.body.exp, req.body.maxhp, req.body.spd, req.body.res]).then(() =>
         res.sendStatus(201)
     ).catch((err) => {
-        console.log('User registration failed: ', err);
+        console.log(err);
         res.sendStatus(500);
     });
 });
@@ -110,7 +110,7 @@ router.get('/collection', rejectUnauthenticated, (req, res) => {
     pool.query(query, [req.user.id]).then(result => {
         res.send(result.rows)
     }).catch((err) => {
-        console.log('User registration failed: ', err);
+        console.log(err);
         res.sendStatus(500);
     });
 });
@@ -140,13 +140,13 @@ router.put('/squad', rejectUnauthenticated, (req, res) => {
     }).then(() => {
         res.sendStatus(201)
     }).catch((err) => {
-        console.log('User registration failed: ', err);
+        console.log(err);
         res.sendStatus(500);
     });
 });
 
 // gets users squad
-router.get('/squad', rejectUnauthenticated, (req, res, next) => {
+router.get('/squad', rejectUnauthenticated, (req, res) => {
     const query = `
         SELECT "monster".monster, "monster".description, "type".type, "monster_collection".* 
 	    FROM "type"
@@ -160,7 +160,7 @@ router.get('/squad', rejectUnauthenticated, (req, res, next) => {
     pool.query(query, [req.user.id]).then(result => {
         res.send(result.rows)
     }).catch((err) => {
-        console.log('User registration failed: ', err);
+        console.log(err);
         res.sendStatus(500);
     });
 });
@@ -175,7 +175,7 @@ router.put('/dead', rejectUnauthenticated, (req, res) => {
     pool.query(query, [req.user.id, req.body.id]).then(() => {
         res.sendStatus(201)
     }).catch((err) => {
-        console.log('User registration failed: ', err);
+        console.log(err);
         res.sendStatus(500);
     });
 });
@@ -212,7 +212,7 @@ router.put('/win', rejectUnauthenticated, (req, res) => {
     }
 
     // rolls stats for lvl up
-    for(let i = 0; req.body.exp > 99; i++) {
+    while (req.body.exp > 99) {
         req.body.lvl += 1
         req.body.exp -= 100
         req.body.maxhp += Math.floor(Math.random() * (10 - 2 + 1)) + 2
@@ -237,7 +237,7 @@ router.put('/win', rejectUnauthenticated, (req, res) => {
     pool.query(query, [req.body.maxhp, req.body.att, req.body.def, req.body.lvl, req.body.exp, req.user.id, req.body.id, req.body.spd, req.body.res]).then(() => {
         res.sendStatus(201)
     }).catch((err) => {
-        console.log('User registration failed: ', err);
+        console.log(err);
         res.sendStatus(500);
     });
 });

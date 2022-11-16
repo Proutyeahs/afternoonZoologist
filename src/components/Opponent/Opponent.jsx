@@ -10,7 +10,7 @@ function Opponent({ monster, handleClickOpen, tameAttempt }) {
     return (
 
         // displays opponent details
-        <Box sx={{ minWidth: 300, maxWidth: 300 }} className='right'>
+        <Box sx={{ minWidth: 250, maxWidth: 250 }} className='inline right'>
             <Card variant="outlined">
                 <CardContent>
                     <h6 className=" margin right">lvl.{monster.lvl} ({monster.exp}/100)</h6>
