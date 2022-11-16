@@ -212,7 +212,7 @@ router.put('/win', rejectUnauthenticated, (req, res) => {
     }
 
     // rolls stats for lvl up
-    if (req.body.exp > 99) {
+    for(let i = 0; req.body.exp > 99; i++) {
         req.body.lvl += 1
         req.body.exp -= 100
         req.body.maxhp += Math.floor(Math.random() * (10 - 2 + 1)) + 2
