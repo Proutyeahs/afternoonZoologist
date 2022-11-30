@@ -8,6 +8,9 @@ function Grid() {
 
     const user = useSelector((store) => store.user)
 
+    // userLocation and mapInfo from the database 
+    const map = useSelector((store) => store.map)
+
     useEffect(() => {
         dispatch({
             type: "GET_MAP",
@@ -15,13 +18,14 @@ function Grid() {
         })
     }, []);
 
-    // This will use the map data from the database
-    let number = [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }, { id: 5 }];
-
     return (
         <>
             <div className="grid">
-                {number.map(num => (
+
+                {/* world map 1st draft */}
+                <img className="map" src="https://res.cloudinary.com/dzyea2237/image/upload/v1669783170/PXL_20221130_043409125_xk3sky.jpg" />
+
+                {map.map(num => (
                     <div key={num.id} className="imageGrid"></div>
                 ))}
             </div>
