@@ -163,18 +163,28 @@ input {
   width: 70%;
 }
 
+.map {
+  position: absolute;
+  width: 720px;
+  min-width: 720px;
+  margin-top: -3px;
+}
+
 .imageGrid {
   height: 20px;
   width: 20px;
   display: inline-block;
   outline: solid black;
   margin: 2px;
+  margin-top: 0px;
   border-radius: 1px;
+  position: relative;
 }
 
 .grid {
   width: 720px;
   display: inline-block;
+  margin-top: 8px;
 }
 
 .health {
