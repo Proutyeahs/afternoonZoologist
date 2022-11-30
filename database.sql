@@ -3,7 +3,8 @@ CREATE TABLE "user" (
     "username" VARCHAR (99) UNIQUE NOT NULL,
     "password" VARCHAR (999) NOT NULL,
     "mod" BOOLEAN DEFAULT false,
-    "admin" BOOLEAN DEFAULT false
+    "admin" BOOLEAN DEFAULT false,
+	"location" INT DEFAULT 50
 );
 
 CREATE TABLE "type" (
@@ -96,10 +97,4 @@ CREATE TABLE "map" (
 	"map_section" VARCHAR(999) NOT NULL, 
 	"description" VARCHAR(9999),
 	"event_id" INT REFERENCES "event" NOT NULL
-);
-
-CREATE TABLE "userLocation" (
-	"id" SERIAL PRIMARY KEY,
-	"user_id" INT REFERENCES "user" NOT NULL,
-	"map_id" INT REFERENCES "map" NOT NULL
 );

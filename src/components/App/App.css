@@ -181,6 +181,10 @@ input {
   position: relative;
 }
 
+.location {
+  outline: solid gold;
+}
+
 .grid {
   width: 720px;
   display: inline-block;
