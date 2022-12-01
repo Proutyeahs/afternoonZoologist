@@ -10,7 +10,6 @@ function* getMap(action) {
     }
 }
 
-
 // Take latest dispatch
 function* monsterSaga() {
     yield takeLatest('GET_MAP', getMap);
