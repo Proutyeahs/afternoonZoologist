@@ -18,9 +18,9 @@ function Movement({lead}) {
           })
     }
 
-    const moveUp = () => {
+    const move = (num) => {
         console.log(user.location)
-        const position = {loc: user.location - 30}
+        const position = {loc: user.location + num}
         dispatch({
             type: 'MOVE',
             payload: position
@@ -32,15 +32,15 @@ function Movement({lead}) {
         <>
             <Card className="size inline">
                 <div className="center">
-                    <KeyboardDoubleArrowUpIcon color="success" size="small" variant="contained" onClick={moveUp}>up</KeyboardDoubleArrowUpIcon>
+                    <KeyboardDoubleArrowUpIcon color="success" size="small" variant="contained" onClick={() => move(-30)}>up</KeyboardDoubleArrowUpIcon>
                 </div>
                 <div>
-                    <KeyboardDoubleArrowLeftIcon color="success" size="small" variant="contained" onClick={getMonsters}>left</KeyboardDoubleArrowLeftIcon>
+                    <KeyboardDoubleArrowLeftIcon color="success" size="small" variant="contained" onClick={() => move(-1)}>left</KeyboardDoubleArrowLeftIcon>
                     <GpsFixedIcon></GpsFixedIcon>
-                    <KeyboardDoubleArrowRightIcon color="success" size="small" variant="contained" onClick={getMonsters}>right</KeyboardDoubleArrowRightIcon>
+                    <KeyboardDoubleArrowRightIcon color="success" size="small" variant="contained" onClick={() => move(1)}>right</KeyboardDoubleArrowRightIcon>
                 </div>
                 <div className="center">
-                    <KeyboardDoubleArrowDownIcon color="success" size="small" variant="contained" onClick={getMonsters}>down</KeyboardDoubleArrowDownIcon>
+                    <KeyboardDoubleArrowDownIcon color="success" size="small" variant="contained" onClick={() => move(30)}>down</KeyboardDoubleArrowDownIcon>
                 </div>
             </Card>
         </>
