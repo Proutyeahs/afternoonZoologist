@@ -11,6 +11,7 @@ function Movement({lead}) {
     const dispatch = useDispatch()
     const user = useSelector((store) => store.user)
 
+    // gets a new set of monsters
     const getMonsters = () => {
         dispatch({
             type: 'GET_MONSTERS',
@@ -18,8 +19,49 @@ function Movement({lead}) {
           })
     }
 
+    // moves user up or down
     const move = (num) => {
-        console.log(user.location)
+
+        // stops movement off map
+        if (user.location + num < 1 || user.location + num > 660 ) {
+            return
+        }
+
+        // dispatches new position
+        const position = {loc: user.location + num}
+        dispatch({
+            type: 'MOVE',
+            payload: position
+        })
+        getMonsters()
+    }
+
+    // moves user left
+    const moveL = (num) => {
+
+        // stops movement off map
+        if (user.location % 30 === 1) {
+            return
+        }
+
+        // dispatches new position
+        const position = {loc: user.location + num}
+        dispatch({
+            type: 'MOVE',
+            payload: position
+        })
+        getMonsters()
+    }
+
+    // moves user right
+    const moveR = (num) => {
+
+        // stops movement off map
+        if (user.location % 30 === 0) {
+            return
+        }
+
+        // dispatches new position
         const position = {loc: user.location + num}
         dispatch({
             type: 'MOVE',
@@ -35,9 +77,9 @@ function Movement({lead}) {
                     <KeyboardDoubleArrowUpIcon color="success" size="small" variant="contained" onClick={() => move(-30)}>up</KeyboardDoubleArrowUpIcon>
                 </div>
                 <div>
-                    <KeyboardDoubleArrowLeftIcon color="success" size="small" variant="contained" onClick={() => move(-1)}>left</KeyboardDoubleArrowLeftIcon>
+                    <KeyboardDoubleArrowLeftIcon color="success" size="small" variant="contained" onClick={() => moveL(-1)}>left</KeyboardDoubleArrowLeftIcon>
                     <GpsFixedIcon></GpsFixedIcon>
-                    <KeyboardDoubleArrowRightIcon color="success" size="small" variant="contained" onClick={() => move(1)}>right</KeyboardDoubleArrowRightIcon>
+                    <KeyboardDoubleArrowRightIcon color="success" size="small" variant="contained" onClick={() => moveR(1)}>right</KeyboardDoubleArrowRightIcon>
                 </div>
                 <div className="center">
                     <KeyboardDoubleArrowDownIcon color="success" size="small" variant="contained" onClick={() => move(30)}>down</KeyboardDoubleArrowDownIcon>
