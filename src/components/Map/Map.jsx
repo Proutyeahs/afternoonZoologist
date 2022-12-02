@@ -7,6 +7,7 @@ import SquadMember from '../SquadMember/SquadMember';
 import Opponent from '../Opponent/Opponent';
 import Movement from './Movement';
 import Grid from './Grid';
+import Details from './Details';
 
 function Map() {
 
@@ -159,6 +160,8 @@ function Map() {
       {toggle === false &&
         <SquadMember details={details} />
       }
+
+      <Details />
 
     </div>
   );
