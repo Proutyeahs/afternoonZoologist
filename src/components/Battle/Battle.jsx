@@ -15,6 +15,31 @@ function Battle({ squad, tameAttempt, handleClose, monsters, setToggle }) {
 
     const lead = useSelector((store) => store.lead)
     const opponent = useSelector((store) => store.opponent)
+    const [repeat, setRepeat] = useState(false)
+
+    // starts repeat battle
+    const repeatBattle = () => {
+        if (opponent.hp > 0 && lead.hp > 0) {
+            console.log("start")
+            setRepeat(true)
+        } else {
+            console.log("fail")
+            setRepeat(false)
+        }
+    }
+
+    // runs repeat battle
+    useEffect(() => {
+        if (opponent.hp > 0 && lead.hp > 0) {
+            console.log("repeat")
+            setTimeout(() => {
+                fight()
+            }, 1500)
+        } else {
+            console.log("stop")
+            setRepeat(false)
+        }
+    }, [repeat])
 
     // runs fight calculations
     const fight = () => {
@@ -170,6 +195,9 @@ function Battle({ squad, tameAttempt, handleClose, monsters, setToggle }) {
         <Box>
             <DialogTitle>
                 Swap Leader:
+
+                {/* displays repeat battle button */}
+                <Button className="right" color="success" size="small" variant="contained" onClick={repeatBattle}>Repeat Battle</Button>
 
                 {/* displays your squad */}
                 <Card className="fit" variant="outlined">
