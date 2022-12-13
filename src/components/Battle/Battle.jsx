@@ -1,4 +1,4 @@
-import React from 'react';
+import { React, useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
@@ -19,7 +19,7 @@ function Battle({ squad, tameAttempt, handleClose, monsters, setToggle }) {
     // runs fight calculations
     const fight = () => {
 
-        // basic dmg so i have something to work with
+        // basic dmg so I have something to work with
         let dmg = Math.round(lead.att * lead.att / (lead.att + opponent.def))
         let monsterDmg = Math.round(opponent.att * opponent.att / (opponent.att + lead.def))
 

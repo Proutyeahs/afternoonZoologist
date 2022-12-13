@@ -6,18 +6,10 @@ import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrow
 import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
 import GpsFixedIcon from '@mui/icons-material/GpsFixed';
 
-function Movement({lead}) {
+function Movement() {
 
     const dispatch = useDispatch()
     const user = useSelector((store) => store.user)
-
-    // gets a new set of monsters
-    const getMonsters = () => {
-        dispatch({
-            type: 'GET_MONSTERS',
-            payload: lead.lvl
-          })
-    }
 
     // moves user up or down
     const move = (num) => {
@@ -33,7 +25,6 @@ function Movement({lead}) {
             type: 'MOVE',
             payload: position
         })
-        getMonsters()
     }
 
     // moves user left
@@ -50,7 +41,6 @@ function Movement({lead}) {
             type: 'MOVE',
             payload: position
         })
-        getMonsters()
     }
 
     // moves user right
@@ -67,7 +57,6 @@ function Movement({lead}) {
             type: 'MOVE',
             payload: position
         })
-        getMonsters()
     }
 
     return (

@@ -167,7 +167,8 @@ input {
   position: absolute;
   width: 720px;
   min-width: 720px;
-  margin-top: -8px;
+  /* margin-top: -8px; */
+  margin-top: -3px;
 }
 
 .imageGrid {
@@ -188,7 +189,8 @@ input {
 .grid {
   width: 720px;
   display: inline-block;
-  margin-top: 13px;
+  /* margin-top: 13px; */
+  margin-top: 8px;
 }
 
 .health {

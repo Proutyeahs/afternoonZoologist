@@ -120,7 +120,7 @@ function Map() {
   return (
     <div className="container">
       <div className='right'>
-        <Movement lead={lead} />
+        <Movement />
       </div>
 
       {/* displays your squad */}
