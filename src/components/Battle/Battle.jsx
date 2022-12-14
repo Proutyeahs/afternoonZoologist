@@ -16,11 +16,17 @@ function Battle({ squad, tameAttempt, handleClose, monsters, setToggle }) {
     const lead = useSelector((store) => store.lead)
     const opponent = useSelector((store) => store.opponent)
     const [repeat, setRepeat] = useState(false)
+    const [click, setClick] = useState(false)
 
     // starts repeat battle
     const repeatBattle = () => {
-        if (opponent.hp > 0 && lead.hp > 0) {
+        if (click) {
+            setClick(false)
+            setRepeat(false)
+            return console.log("end")
+        } else if (opponent.hp > 0 && lead.hp > 0) {
             console.log("start")
+            setClick(true)
             setRepeat(true)
         } else {
             console.log("fail")
@@ -30,19 +36,20 @@ function Battle({ squad, tameAttempt, handleClose, monsters, setToggle }) {
 
     // runs repeat battle
     useEffect(() => {
-        if (opponent.hp > 0 && lead.hp > 0) {
-            console.log("repeat")
-            setTimeout(() => {
-                fight()
-            }, 1500)
-        } else {
-            console.log("stop")
-            setRepeat(false)
-        }
-    }, [repeat])
+        setTimeout(() => {
+            if (repeat && opponent.hp > 0 && lead.hp > 0) {
+                console.log("repeat")
+                return fight()
+            } else {
+                console.log("stop")
+                return setRepeat(false)
+            }
+        }, 2000)
+    })
 
     // runs fight calculations
     const fight = () => {
+        setRepeat(false)
 
         // basic dmg so I have something to work with
         let dmg = Math.round(lead.att * lead.att / (lead.att + opponent.def))
@@ -52,7 +59,7 @@ function Battle({ squad, tameAttempt, handleClose, monsters, setToggle }) {
         if (lead.hp === 0) {
             return alert("This Animal can no longer fight!")
 
-        // checks type advantage
+            // checks type advantage
         } else if (
             lead.type === "Fire" && opponent.type === "Air" ||
             lead.type === "Earth" && opponent.type === "Water" ||
@@ -85,6 +92,11 @@ function Battle({ squad, tameAttempt, handleClose, monsters, setToggle }) {
                         type: "TAKE_DMG",
                         payload: monsterDmg
                     })
+
+                    // repeat attack
+                    if (click) {
+                        setRepeat(true)
+                    }
                 }
 
                 // run win or lose functions
@@ -110,6 +122,11 @@ function Battle({ squad, tameAttempt, handleClose, monsters, setToggle }) {
                         type: "DEAL_DMG",
                         payload: dmg
                     })
+
+                    // repeat attack
+                    if (click) {
+                        setRepeat(true)
+                    }
                 }
 
                 // run win or lose functions
