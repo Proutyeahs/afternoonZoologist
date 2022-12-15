@@ -15,7 +15,7 @@ function Movement() {
     const move = (num) => {
 
         // stops movement off map
-        if (user.location + num < 1 || user.location + num > 660 ) {
+        if (user.location + num < 1 || user.location + num > /* 660 */ 630 ) {
             return
         }
 
