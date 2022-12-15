@@ -59,7 +59,7 @@ function Battle({ squad, tameAttempt, handleClose, monsters, setToggle }) {
         if (lead.hp === 0) {
             return alert("This Animal can no longer fight!")
 
-            // checks type advantage
+        // checks type advantage
         } else if (
             lead.type === "Fire" && opponent.type === "Air" ||
             lead.type === "Earth" && opponent.type === "Water" ||
@@ -176,7 +176,29 @@ function Battle({ squad, tameAttempt, handleClose, monsters, setToggle }) {
                 payload: lead.lvl
             })
         }
-        setToggle(null)
+
+        // repeat battle
+        if (click) {
+            setTimeout(() => {
+
+                // replaces dead monster
+                dispatch({
+                    type: "SET_OPPONENT",
+                    payload: monsters[0]
+                })
+
+                // updates lead stats *not working*
+                dispatch({
+                    type: 'SET_LEAD',
+                    payload: lead
+                })
+
+                // repeat attack
+                setRepeat(true)
+            }, 1500)
+        } else {
+            setToggle(null)
+        }
     }
 
     // renders attack button when monsters are alive
