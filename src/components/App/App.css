@@ -169,7 +169,8 @@ input {
   min-width: 720px;
   /* margin-top: -8px; */
   /* margin-top: -3px; */
-  margin-top: -6px;
+  /* margin-top: -6px; */
+  margin-top: -1px;
 }
 
 .imageGrid {
@@ -210,4 +211,28 @@ input {
   border-radius: 2px;
   outline: solid black;
   margin: 0%;
+}
+
+.scroll {
+  background-image: url("https://res.cloudinary.com/dzyea2237/image/upload/v1671245095/kisspng-scroll-vector-graphics-design-clip-art-paper-bridesmaids-5cc8f69b8de0d7.7462101015566742035812_qpzxro.png");
+  background-size: 250px;
+  background-repeat: no-repeat;
+  text-align: center;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.sideScroll {
+  background-image: url("https://res.cloudinary.com/dzyea2237/image/upload/v1671246135/kisspng-scroll-vector-graphics-design-clip-art-paper-bridesmaids-5cc8f69b8de0d7.7462101015566742035812_lrqzp9.png");
+  background-size: 720px 130px;
+  padding-top: 10px;
+  padding-bottom: 25px;
+  padding-left: 80px;
+  padding-right: 150px;
+  background-repeat: no-repeat;
+}
+
+body {
+  background-image: url("https://res.cloudinary.com/dzyea2237/image/upload/v1671248670/360_F_466134779_AgMg3t7KNO5mu6JMSvgf4sgYqnPcXBXs_xhfcos.jpg");
+  font-family: 'MedievalSharp', cursive;
 }

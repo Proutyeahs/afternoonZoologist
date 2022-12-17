@@ -12,23 +12,24 @@ function Details() {
     const user = useSelector((store) => store.user);
 
     return (
-
         // displays world map details
         <Box sx={{ minWidth: 250, maxWidth: 250 }} className='inline right'>
-            <Card variant="outlined">
-                <CardContent>
-                    <h6>World Location</h6>
-                    <h4>Coordinates:</h4>
-                    {map.map(map => (
-                        <div>{user.location === map.id && <p>X:{map.x} Y:{map.y}</p>}</div>
-                    ))}
-                    <h5>Description:</h5>
-                    <p>Events:</p>
-                </CardContent>
-                <CardActions>
-                </CardActions>
-            </Card>
-        </Box>
+            <div className="scroll">
+                {/* <Card variant="outlined"> */}
+                    <CardContent>
+                        <h6>World Location</h6>
+                        <h4>Coordinates:</h4>
+                        {map.map(map => (
+                            <div>{user.location === map.id && <p>X:{map.x} Y:{map.y}</p>}</div>
+                        ))}
+                        <h5>Description:</h5>
+                        <p>Events:</p>
+                    </CardContent>
+                    <CardActions>
+                    </CardActions>
+                {/* </Card> */}
+            </div>
+        </Box >
     )
 }
 

@@ -124,25 +124,29 @@ function Map() {
       </div>
 
       {/* displays your squad */}
-      <p className='margin'>Current Squad:</p>
-      <Card className="size" variant="outlined">
-        {squad.map(monster => (
-          <div className="inline padding" key={monster.id}>
-            <h4 onClick={() => toggleDetails(monster)} className={`margin inline ${monster.gold ? "gold" : ""}`}>{monster.monster}</h4>
+      <div>
+        <div className='sideScroll'>
+          <p className='margin'>Current Squad:</p>
+          <div className="size">
+            {squad.map(monster => (
+              <div className="inline padding" key={monster.id}>
+                <h4 onClick={() => toggleDetails(monster)} className={`margin inline ${monster.gold ? "gold" : ""}`}>{monster.monster}</h4>
+              </div>
+            ))}
           </div>
-        ))}
-      </Card>
 
-      <p className='margin'>Animals in your area:</p>
+          <p className='margin'>Animals in your area:</p>
 
-      {/* displays monsters */}
-      <Card className="size" variant="outlined">
-        {monsters.map(monster => (
-          <div className="inline padding" key={monster.id}>
-            <h4 onClick={() => toggleMonster(monster)} className={`margin inline ${monster.gold ? "gold" : ""}`}>{monster.monster}</h4>
+          {/* displays monsters */}
+          <div className="size">
+            {monsters.map(monster => (
+              <div className="inline padding" key={monster.id}>
+                <h4 onClick={() => toggleMonster(monster)} className={`margin inline ${monster.gold ? "gold" : ""}`}>{monster.monster}</h4>
+              </div>
+            ))}
           </div>
-        ))}
-      </Card>
+        </div>
+      </div>
 
       <Grid />
 

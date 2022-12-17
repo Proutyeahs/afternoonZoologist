@@ -73,16 +73,16 @@ function Collection() {
 
       {/* displays monster details when true */}
       {details !== '' &&
-        <Box sx={{ minWidth: 300, maxWidth: 300 }} className='right'>
-          <Card variant="outlined">
+        <Box sx={{ minWidth: 250, maxWidth: 250 }} className='right'>
+          <div className="scroll">
             <CardContent>
-              <h6 className='right'>lvl: {details.lvl} (exp: {details.exp}/100)</h6>
+              <h6 className='margin right'>lvl: {details.lvl} (exp: {details.exp}/100)</h6>
               <h4 className={`${details.gold ? "gold" : ""}`}>{details.monster}</h4>
               <h5>{details.type} type</h5>
               <h6>hp: {details.hp}, spd: {details.spd}, att: {details.att}, def: {details.def}, res: {details.res}</h6>
               <p>{details.description}</p>
             </CardContent>
-          </Card>
+          </div>
         </Box>
       }
 
