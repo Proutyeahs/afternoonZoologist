@@ -4,7 +4,7 @@ CREATE TABLE "user" (
     "password" VARCHAR (999) NOT NULL,
     "mod" BOOLEAN DEFAULT false,
     "admin" BOOLEAN DEFAULT false,
-	"location" INT DEFAULT 50
+	"location" INT DEFAULT 436
 );
 
 CREATE TABLE "type" (
