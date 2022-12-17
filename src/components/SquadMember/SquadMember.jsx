@@ -19,17 +19,19 @@ function SquadMember({ details }) {
 
         // displays squad details
         <Box sx={{ minWidth: 250, maxWidth: 250 }} className='inline right'>
-            <Card variant="outlined">
-                <CardContent>
-                    <h6 className=" margin right">lvl.{details.lvl} ({details.exp}/100)</h6>
-                    <h4 className={`${details.gold ? "gold" : ""}`}>{details.monster}</h4>
-                    <h5>{details.type} type</h5>
-                    <p>{details.description}</p>
-                </CardContent>
+            <div>
+                <div className="scroll">
+                    <CardContent>
+                        <h6 className=" margin right">lvl.{details.lvl} ({details.exp}/100)</h6>
+                        <h4 className={`${details.gold ? "gold" : ""}`}>{details.monster}</h4>
+                        <h5>{details.type} type</h5>
+                        <p>{details.description}</p>
+                    </CardContent>
+                </div>
                 {/* <CardActions>
                     <Button color="secondary" size="small" variant="contained" onClick={setLead}>Lead</Button>
                 </CardActions> */}
-            </Card>
+            </div>
         </Box>
 
     )
