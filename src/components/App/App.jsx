@@ -19,6 +19,7 @@ import Collection from '../Collection/Collection';
 import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
+import Companion from '../RegisterForm/Companion';
 
 import './App.css';
 
@@ -65,6 +66,13 @@ function App() {
             path="/collection"
           >
             <Collection />
+          </ProtectedRoute>
+
+          <ProtectedRoute
+            exact
+            path="/companion"
+          >
+            <Companion />
           </ProtectedRoute>
 
           <Route

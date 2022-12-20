@@ -11,6 +11,9 @@ function Collection() {
   // call get on load/reload
   useEffect(() => {
     dispatch({
+      type: 'UNSET_COLLECTION'
+    })
+    dispatch({
       type: 'GET_COLLECTION'
     })
   }, [])
@@ -65,7 +68,7 @@ function Collection() {
         <Card variant="outlined">
           {collection.map(monster => (
             <div className="padding" key={monster.id}>
-              <h4 onClick={() => addToSquad(monster)} className={`${monster.gold ? "gold" : ""} ${squad.includes(monster) ? "squad" : ''}`}>{monster.monster}</h4>
+              <h4 onClick={() => addToSquad(monster)} className={`${monster.gold ? "gold" : ""} ${monster.gold === null ? "silver" : ""} ${squad.includes(monster) ? "squad" : ''}`}>{monster.monster}</h4>
             </div>
           ))}
         </Card>
@@ -77,7 +80,7 @@ function Collection() {
           <div className="scroll">
             <CardContent>
               <h6 className='margin right'>lvl: {details.lvl} (exp: {details.exp}/100)</h6>
-              <h4 className={`${details.gold ? "gold" : ""}`}>{details.monster}</h4>
+              <h4 className={`${details.gold ? "gold" : ""} ${details.gold === null ? "silver" : ""}`}>{details.monster}</h4>
               <h5>{details.type} type</h5>
               <h6>hp: {details.hp}, spd: {details.spd}, att: {details.att}, def: {details.def}, res: {details.res}</h6>
               <p>{details.description}</p>

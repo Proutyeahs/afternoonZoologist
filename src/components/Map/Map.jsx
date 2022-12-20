@@ -32,7 +32,13 @@ function Map() {
       payload: lead.lvl
     })
     dispatch({
+      type: 'UNSET_SQUAD'
+    })
+    dispatch({
       type: 'GET_SQUAD'
+    })
+    dispatch({
+      type: 'GET_SQUAD_COMPANION'
     })
   }, [])
 
@@ -130,7 +136,7 @@ function Map() {
           <div className="size">
             {squad.map(monster => (
               <div className="inline padding" key={monster.id}>
-                <h4 onClick={() => toggleDetails(monster)} className={`margin inline ${monster.gold ? "gold" : ""}`}>{monster.monster}</h4>
+                <h4 onClick={() => toggleDetails(monster)} className={`margin inline ${monster.gold ? "gold" : ""} ${monster.gold === null ? "silver" : ""}`}>{monster.monster}</h4>
               </div>
             ))}
           </div>

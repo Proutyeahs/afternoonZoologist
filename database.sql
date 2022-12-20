@@ -52,8 +52,8 @@ CREATE TABLE "weapon_inventory" (
 CREATE TABLE "monster_collection" (
     "id" SERIAL PRIMARY KEY,
     "user_id" INT REFERENCES "user" NOT NULL,
-    "monster_id" INT REFERENCES "monster" NOT NULL,
-    "gold" BOOLEAN NOT NULL,
+    "monster_id" INT REFERENCES "monster",
+    "gold" BOOLEAN,
     "hp" INT NOT NULL,
     "maxhp" INT NOT NULL,
     "att" INT NOT NULL,
@@ -293,3 +293,11 @@ INSERT INTO "map"
     	(null, 1, 1, null, null),(null, 1, 1, null, null),(null, 1, 1, null, null),			(null, 1, 1, null, null),(null, 1, 1, null, null),(null, 1, 1, null, null),			(null, 1, 1, null, null),(null, 1, 1, null, null),(null, 1, 1, null, null),
     	(null, 1, 1, null, null),(null, 1, 1, null, null),(null, 1, 1, null, null)
 ;
+
+CREATE TABLE "companion" (
+	"id" SERIAL PRIMARY KEY,
+	"monster" VARCHAR (999) NOT NULL,
+	"description" VARCHAR (9999) NOT NULL,
+	"type_id" INT REFERENCES "type" NOT NULL,
+	"monster_collection_id" INT REFERENCES "monster_collection" NOT NULL
+);
