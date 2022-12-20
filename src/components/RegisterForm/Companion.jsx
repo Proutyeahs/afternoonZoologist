@@ -9,6 +9,7 @@ function Companion() {
     const dispatch = useDispatch();
     const history = useHistory();
 
+    // dispatches companion data
     const saveCompanion = (event) => {
         event.preventDefault();
 
@@ -25,6 +26,8 @@ function Companion() {
     };
 
     return (
+
+        // displays companion submission form
         <form className="formPanel" onSubmit={saveCompanion}>
             <h2>Create an Animal Companion</h2>
             {errors.registrationMessage && (

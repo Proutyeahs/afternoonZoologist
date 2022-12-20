@@ -9,17 +9,23 @@ const router = express.Router();
 // posts companion
 router.post('/', rejectUnauthenticated, (req, res) => {
 
+    // picks a random type
     const type = Math.floor(Math.random() * (4 - 1 + 1)) + 1
 
+    // inserts stats for companion
     const query = `
         INSERT INTO "monster_collection" 
 	    ("user_id", "monster_id", "gold", "hp", "att", "def", "lvl", "exp", "maxhp", "spd", "res", "squad")
         VALUES ($1, null, null, 100, 50, 50, 5, 0, 100, 50, 50, true)
     ;`;
+
+    // gets the id for the companions stats
     const query2 = `
         SELECT "id" FROM "monster_collection"
 	    WHERE ("user_id" = $1 AND "monster_id" IS NULL)
     ;`;
+
+    // inserts companion referencing its stats
     const query3 = `
         INSERT INTO "companion" 
 	    ("monster", "description", "type_id", "monster_collection_id")
