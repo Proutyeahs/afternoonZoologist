@@ -242,7 +242,7 @@ function Battle({ squad, tameAttempt, handleClose, monsters, setToggle }) {
                 <Card className="fit" variant="outlined">
                     {squad.map(monster => (
                         <div className="inline padding" key={monster.id}>
-                            <h6 onClick={() => swapLeader(monster)} className={`margin inline ${monster.gold ? "gold" : ""}`}>{monster.monster}</h6>
+                            <h6 onClick={() => swapLeader(monster)} className={`margin inline ${monster.gold ? "gold" : ""} ${monster.gold === null ? "silver" : ""}`}>{monster.monster}</h6>
                         </div>
                     ))}
                 </Card>
@@ -257,7 +257,7 @@ function Battle({ squad, tameAttempt, handleClose, monsters, setToggle }) {
                     {/* displays health bar */}
                     <HpBar stats={lead} />
 
-                    <h4 className={`${lead.gold ? "gold" : ""}`}>{lead.monster}</h4>
+                    <h4 className={`${lead.gold ? "gold" : ""} ${lead.gold === null ? "silver" : ""}`}>{lead.monster}</h4>
                     <h6 className=" margin right">lvl.{lead.lvl} {lead.exp}/100</h6>
                     <h5>{lead.type} type</h5>
                 </Card>

@@ -19,36 +19,28 @@ function LandingPage() {
 
       <div className="grid">
         <div className="grid-col grid-col_8">
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur
-            id felis metus. Vestibulum et pulvinar tortor. Morbi pharetra lacus
-            ut ex molestie blandit. Etiam et turpis sit amet risus mollis
-            interdum. Suspendisse et justo vitae metus bibendum fringilla sed
-            sed justo. Aliquam sollicitudin dapibus lectus, vitae consequat odio
-            elementum eget. Praesent efficitur eros vitae nunc interdum, eu
-            interdum justo facilisis. Sed pulvinar nulla ac dignissim efficitur.
-            Quisque eget eros metus. Vestibulum bibendum fringilla nibh a
-            luctus. Duis a sapien metus.
-          </p>
+          <p># Afternoon Zoologist</p>
+
+          <p>This app is a functional prototype of my text heavy RPG game.</p>
 
           <p>
-            Praesent consectetur orci dui, id elementum eros facilisis id. Sed
-            id dolor in augue porttitor faucibus eget sit amet ante. Nunc
-            consectetur placerat pharetra. Aenean gravida ex ut erat commodo, ut
-            finibus metus facilisis. Nullam eget lectus non urna rhoncus
-            accumsan quis id massa. Curabitur sit amet dolor nisl. Proin
-            euismod, augue at condimentum rhoncus, massa lorem semper lacus, sed
-            lobortis augue mi vel felis. Duis ultrices sapien at est convallis
-            congue.
+            I was inspired to create this game while I worked as an assistant teacher.  My students were often caught playing idle games such as CookieClicker or Idle BrickBreaker.  I wanted to create something educational that would work similarly to these popular idle games.
+            I drew my inspiration from table top board games, as well as text adventures I played growing up.  These games helped me to develop my reading skills when I was younger and I wanted to create something similar for my students who were falling behind with their reading abilities.
           </p>
-
+          In Afternoon Zoologist you are able to move around and explore the world I created with descriptions, events, quests, animals and more, all of which is completely text oriented.  The animals depicted are all extinct or endangered animals with depictions of what they used to look like and the environments they inhabited.  You will be able to Tame these animals and bring them along with you on your journey.  Leveling up can be done manually or you will be able to start an auto battle and let the game run while you get some real work done!
           <p>
-            Fusce porta diam ac tortor elementum, ut imperdiet metus volutpat.
-            Suspendisse posuere dapibus maximus. Aliquam vitae felis libero. In
-            vehicula sapien at semper ultrices. Vivamus sed feugiat libero. Sed
-            sagittis neque id diam euismod, ut egestas felis ultricies. Nullam
-            non fermentum mauris. Sed in enim ac turpis faucibus pretium in sit
-            amet nisi.
+            ### Updates
+          </p>
+          <p>
+            This is still very much a work in progress.
+            I have a lot of features planned as well as the story and map descriptions.
+          </p>
+          <p>
+            I am currently prioritizing functionality and bug fixes over the text aspect of the game. Updates, images, gifs, and eventually hosting will come as I continue working on this project!
+          </p>
+          <p>
+            ## Contact me:
+            Eric.w.Prouty@gmail.com
           </p>
         </div>
         <div className="grid-col grid-col_4">
