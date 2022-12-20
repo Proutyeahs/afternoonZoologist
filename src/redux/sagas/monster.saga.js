@@ -63,6 +63,8 @@ function* getSquad() {
 function* dead(action) {
     try {
         yield axios.put('/api/monster/dead', action.payload)
+        yield put({ type: 'UNSET_SQUAD' })
+        yield put({ type: 'GET_SQUAD_COMPANION' })
         yield put({ type: 'GET_SQUAD' })
     } catch (error) {
         console.log(error);
@@ -74,6 +76,8 @@ function* win(action) {
     console.log(action.payload)
     try {
         yield axios.put('/api/monster/win', action.payload)
+        yield put({ type: 'UNSET_SQUAD' })
+        yield put({ type: 'GET_SQUAD_COMPANION' })
         yield put({ type: 'GET_SQUAD' })
     } catch (error) {
         console.log(error);

@@ -23,7 +23,7 @@ function SquadMember({ details }) {
                 <div className="scroll">
                     <CardContent>
                         <h6 className=" margin right">lvl.{details.lvl} ({details.exp}/100)</h6>
-                        <h4 className={`${details.gold ? "gold" : ""}`}>{details.monster}</h4>
+                        <h4 className={`${details.gold ? "gold" : ""} ${details.gold === null ? "silver" : ""}`}>{details.monster}</h4>
                         <h5>{details.type} type</h5>
                         <p>{details.description}</p>
                     </CardContent>

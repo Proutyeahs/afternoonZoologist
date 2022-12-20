@@ -3,7 +3,9 @@
 const squadReducer = (state = [], action) => {
     switch (action.type) {
         case 'SET_SQUAD':
-            return action.payload;
+            return [...state, ...action.payload];
+        case 'SET_SQUAD_COMPANION':
+            return [...state, ...action.payload];
         case 'UNSET_SQUAD':
             return [];
         default:

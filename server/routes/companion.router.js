@@ -62,4 +62,24 @@ router.get('/collection', rejectUnauthenticated, (req, res) => {
     });
 });
 
+// gets users companion for the squad
+router.get('/squad', rejectUnauthenticated, (req, res) => {
+    const query = `
+        SELECT "companion".monster, "companion".description, "type".type, "monster_collection".* 
+        FROM "type"
+        JOIN "companion"
+        ON "companion".type_id = "type".id
+        JOIN "monster_collection"
+        ON "monster_collection".id = "companion".monster_collection_id
+        WHERE ("user_id" = $1 AND "squad" = true)
+        ORDER BY "monster_collection".lvl DESC
+    ;`;
+    pool.query(query, [req.user.id]).then(result => {
+        res.send(result.rows)
+    }).catch((err) => {
+        console.log(err);
+        res.sendStatus(500);
+    });
+});
+
 module.exports = router;

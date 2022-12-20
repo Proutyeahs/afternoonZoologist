@@ -20,10 +20,22 @@ function* getCompanion() {
     }
 }
 
+// sends get request for companion in your squad
+function* getSquadCompanion() {
+    try {
+        const companion = yield axios.get('/api/companion/squad')
+        yield put({ type: 'SET_SQUAD_COMPANION', payload: companion.data })
+        // yield put({ type: 'SET_LEAD', payload: squad.data[0] })
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 // Take latest dispatch
 function* companionSaga() {
     yield takeLatest('SAVE_COMPANION', saveCompanion);
     yield takeLatest('GET_COLLECTION', getCompanion)
+    yield takeLatest('GET_SQUAD_COMPANION', getSquadCompanion)
 }
 
 export default companionSaga;
