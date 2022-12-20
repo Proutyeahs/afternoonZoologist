@@ -36,10 +36,30 @@ router.post('/', rejectUnauthenticated, (req, res) => {
             console.log(result.rows[0].id)
             pool.query(query3, [req.body.name, req.body.description, type, result.rows[0].id]).then(() =>
                 res.sendStatus(201)
-            )})).catch((err) => {
-                console.log(err);
-                res.sendStatus(500);
-            });
+            )
+        })).catch((err) => {
+            console.log(err);
+            res.sendStatus(500);
+        });
+});
+
+// gets users companion
+router.get('/collection', rejectUnauthenticated, (req, res) => {
+    const query = `
+        SELECT "companion".monster, "companion".description, "type".type, "monster_collection".* 
+        FROM "type"
+        JOIN "companion"
+        ON "companion".type_id = "type".id
+        JOIN "monster_collection"
+        ON "monster_collection".id = "companion".monster_collection_id
+        WHERE "user_id" = $1
+    ;`;
+    pool.query(query, [req.user.id]).then(result => {
+        res.send(result.rows)
+    }).catch((err) => {
+        console.log(err);
+        res.sendStatus(500);
+    });
 });
 
 module.exports = router;
