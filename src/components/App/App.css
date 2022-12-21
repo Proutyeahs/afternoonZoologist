@@ -139,6 +139,14 @@ input {
   width: fit-content;
 }
 
+.hight {
+  height: 25px;
+}
+
+.hight1 {
+  height: 30px;
+}
+
 .padding {
   padding-inline: 20px;
 }
@@ -235,6 +243,7 @@ input {
   padding-left: 80px;
   padding-right: 150px;
   background-repeat: no-repeat;
+  height: 100px;
 }
 
 body {

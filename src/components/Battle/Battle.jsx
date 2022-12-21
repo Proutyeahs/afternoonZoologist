@@ -15,9 +15,11 @@ function Battle({ squad, tameAttempt, handleClose, monsters, setToggle }) {
 
     const lead = useSelector((store) => store.lead)
     const opponent = useSelector((store) => store.opponent)
+    const [disabled, setDisabled] = useState(false)
 
     // runs fight calculations
     const fight = () => {
+        setDisabled(true)
 
         // basic dmg so I have something to work with
         let dmg = Math.round(lead.att * lead.att / (lead.att + opponent.def))
@@ -70,6 +72,7 @@ function Battle({ squad, tameAttempt, handleClose, monsters, setToggle }) {
                     console.log(lead.hp - monsterDmg)
                     dead()
                 }
+                setDisabled(false)
             }, 600)
         }
 
@@ -95,6 +98,7 @@ function Battle({ squad, tameAttempt, handleClose, monsters, setToggle }) {
                     console.log(lead.hp - monsterDmg)
                     dead()
                 }
+                setDisabled(false)
             }, 600)
         }
         console.log("my att", dmg, "opp att", monsterDmg)
@@ -140,7 +144,7 @@ function Battle({ squad, tameAttempt, handleClose, monsters, setToggle }) {
     // renders attack button when monsters are alive
     const attack = () => {
         if (opponent.hp > 0 && lead.hp > 0) {
-            return <Button color="error" size="small" variant="contained" onClick={fight}> Attack </Button>
+            return <Button disabled={disabled} color="error" size="small" variant="contained" onClick={fight}> Attack </Button>
         }
     }
 
@@ -160,7 +164,7 @@ function Battle({ squad, tameAttempt, handleClose, monsters, setToggle }) {
         if (lead.hp < 1 && opponent.hp > 0) {
             return (
                 <Alert severity="success" color="error">
-                    <Button color="error" size="small" variant="contained" onClick={handleClose}> You Died! </Button>
+                    <Button disabled={disabled} color="error" size="small" variant="contained" onClick={handleClose}> You Died! </Button>
                 </Alert>
             )
         }
@@ -172,7 +176,7 @@ function Battle({ squad, tameAttempt, handleClose, monsters, setToggle }) {
                 Swap Leader:
 
                 {/* displays your squad */}
-                <Card className="fit" variant="outlined">
+                <Card className="fit hight1" variant="outlined">
                     {squad.map(monster => (
                         <div className="inline padding" key={monster.id}>
                             <h6 onClick={() => swapLeader(monster)} className={`margin inline ${monster.gold ? "gold" : ""} ${monster.gold === null ? "silver" : ""}`}>{monster.monster}</h6>
@@ -210,7 +214,7 @@ function Battle({ squad, tameAttempt, handleClose, monsters, setToggle }) {
                 </Card>
 
             </DialogContent>
-            <DialogActions>
+            <DialogActions className='hight1'>
 
                 {/* displays death button */}
                 {youDied()}
@@ -218,7 +222,7 @@ function Battle({ squad, tameAttempt, handleClose, monsters, setToggle }) {
                 {/* displays win button */}
                 {opponent.hp <= 0 &&
                     <Alert severity="success" color="success">
-                        <Button color="error" size="small" variant="contained" onClick={handleClose}> You Win! </Button>
+                        <Button disabled={disabled} color="error" size="small" variant="contained" onClick={handleClose}> You Win! </Button>
                     </Alert>
                 }
 

@@ -133,7 +133,7 @@ function Map() {
       <div>
         <div className='sideScroll'>
           <p className='margin'>Current Squad:</p>
-          <div className="size">
+          <div className="hight size">
             {squad.map(monster => (
               <div className="inline padding" key={monster.id}>
                 <h4 onClick={() => toggleDetails(monster)} className={`margin inline ${monster.gold ? "gold" : ""} ${monster.gold === null ? "silver" : ""}`}>{monster.monster}</h4>
