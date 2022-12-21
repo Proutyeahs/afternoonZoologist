@@ -85,12 +85,12 @@ function Map() {
   };
 
   // rolls odds to catch monster
-  let odds = 15
+  let odds = 10
   const tameAttempt = () => {
 
     // sets attempt value on click
     let attempt = Math.floor(Math.random() * (odds - 1 + 1)) + 1
-    if (odds < 40) {
+    if (odds < 20) {
       odds++
     }
     console.log(attempt, odds)
