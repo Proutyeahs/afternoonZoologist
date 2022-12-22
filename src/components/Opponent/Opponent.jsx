@@ -1,11 +1,14 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 
-function Opponent({ monster, handleClickOpen, tameAttempt }) {
+function Opponent({ monster, handleClickOpen, tameAttempt, disable }) {
+
+    const items = useSelector((store) => store.item)
 
     return (
 
@@ -21,8 +24,12 @@ function Opponent({ monster, handleClickOpen, tameAttempt }) {
                     </CardContent>
                 </div>
                 <CardActions>
-                    <Button color="secondary" size="small" variant="contained" onClick={tameAttempt}>Tame</Button>
                     <Button color="error" size="small" variant="contained" onClick={handleClickOpen}>Fight</Button>
+                    <Button disable={disable} color="secondary" size="small" variant="contained" onClick={tameAttempt}>Tame</Button>
+                    {items.map(item => (
+                        item.id === 1 &&
+                        <p key={item.id}>: x {item.quantity}</p>
+                    ))}
                 </CardActions>
             </div>
         </Box>

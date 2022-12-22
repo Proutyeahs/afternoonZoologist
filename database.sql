@@ -73,6 +73,10 @@ CREATE TABLE "effect" (
 	"description" VARCHAR (9999) NOT NULL
 );
 
+INSERT INTO "effect"
+	("effect", "description")
+	VALUES ('+10hp', 'Heals 10 health points');
+
 CREATE TABLE "item" (
 	"id" SERIAL PRIMARY KEY,
 	"name" VARCHAR (999) NOT NULL,
@@ -80,10 +84,15 @@ CREATE TABLE "item" (
 	"effect_id" INT REFERENCES "effect" NOT NULL
 );
 
+INSERT INTO "item"
+	("name", "description", "effect_id")
+	VALUES ('Treat', 'Food used to tame wild animals', 1);
+
 CREATE TABLE "item_inventory" (
 	"id" SERIAL PRIMARY KEY,
 	"user_id" INT REFERENCES "user" NOT NULL, 
-	"item_id" INT REFERENCES "item" NOT NULL
+	"item_id" INT REFERENCES "item" NOT NULL,
+	"quantity" INT
 );
 
 CREATE TABLE "event" (

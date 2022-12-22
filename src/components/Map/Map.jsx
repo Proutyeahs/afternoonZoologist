@@ -24,6 +24,8 @@ function Map() {
   const [details, setDetails] = useState('')
   const [open, setOpen] = useState(false);
   const [toggle, setToggle] = useState(null)
+  const [disabled, setDisabled] = useState(false)
+  const items = useSelector((store) => store.item)
 
   // call gets on load/reload
   useEffect(() => {
@@ -39,6 +41,9 @@ function Map() {
     })
     dispatch({
       type: 'GET_SQUAD_COMPANION'
+    })
+    dispatch({
+      type: 'GET_ITEMS'
     })
   }, [])
 
@@ -85,12 +90,21 @@ function Map() {
   };
 
   // rolls odds to catch monster
-  let odds = 15
+  let odds = 10
   const tameAttempt = () => {
+
+    // stops function if you're out of treats
+    for (let item of items) {
+      if (item.id === 1 && item.quantity < 1) {
+        return alert("You've run out of treats to tame animals with")
+      }
+    }
+
+    setDisabled(true)
 
     // sets attempt value on click
     let attempt = Math.floor(Math.random() * (odds - 1 + 1)) + 1
-    if (odds < 40) {
+    if (odds < 20) {
       odds++
     }
     console.log(attempt, odds)
@@ -121,6 +135,13 @@ function Map() {
       }
       alert("Animal Sucessfully Tamed!")
     }
+
+    // item quantity -1
+    dispatch({
+      type: 'USE_ITEM',
+      payload: {id : 1}
+    })
+    setDisabled(false)
   }
 
   return (
@@ -133,7 +154,7 @@ function Map() {
       <div>
         <div className='sideScroll'>
           <p className='margin'>Current Squad:</p>
-          <div className="size">
+          <div className="hight size">
             {squad.map(monster => (
               <div className="inline padding" key={monster.id}>
                 <h4 onClick={() => toggleDetails(monster)} className={`margin inline ${monster.gold ? "gold" : ""} ${monster.gold === null ? "silver" : ""}`}>{monster.monster}</h4>

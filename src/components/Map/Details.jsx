@@ -20,7 +20,7 @@ function Details() {
                         <h6>World Location</h6>
                         <h4>Coordinates:</h4>
                         {map.map(map => (
-                            <div>{user.location === map.id && <p>X:{map.x} Y:{map.y}</p>}</div>
+                            <div key={map.id}>{user.location === map.id && <p>X:{map.x} Y:{map.y}</p>}</div>
                         ))}
                         <h5>Description:</h5>
                         <p>Events:</p>

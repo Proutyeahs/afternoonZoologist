@@ -5,16 +5,16 @@ import { useHistory } from 'react-router-dom';
 function Companion() {
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
+    const [disabled, setDisabled] = useState(false)
     const errors = useSelector((store) => store.errors);
     const dispatch = useDispatch();
     const history = useHistory();
 
     // dispatches companion data
     const saveCompanion = (event) => {
+        setDisabled(true)
         event.preventDefault();
 
-        console.log(name, description)
-        
         dispatch({
             type: 'SAVE_COMPANION',
             payload: {
@@ -22,7 +22,14 @@ function Companion() {
                 description: description,
             },
         });
-        history.push('/map')
+        dispatch({
+            type: 'ADD_ITEM',
+            payload: {id: 1, quantity: 100}
+        })
+        setTimeout(() => {
+            history.push('/map')
+            setDisabled(false)
+        }, 400)
     };
 
     return (
@@ -39,6 +46,7 @@ function Companion() {
                 <label htmlFor="name">
                     Name:
                     <input
+                        placeholder='Name your pet'
                         type="text"
                         name="name"
                         value={name}
@@ -51,6 +59,7 @@ function Companion() {
                 <label htmlFor="description">
                     <p>Description:</p>
                     <textarea
+                        placeholder='Add a description of your pet'
                         type="text"
                         name="description"
                         rows={3}
@@ -61,7 +70,7 @@ function Companion() {
                 </label>
             </div>
             <div>
-                <input className="btn" type="submit" name="submit" value="Comfirm Companion" />
+                <input disabled={disabled} className="btn" type="submit" name="submit" value="Confirm Companion" />
             </div>
         </form>
     );
