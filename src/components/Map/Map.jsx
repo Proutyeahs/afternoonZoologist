@@ -24,6 +24,7 @@ function Map() {
   const [details, setDetails] = useState('')
   const [open, setOpen] = useState(false);
   const [toggle, setToggle] = useState(null)
+  const [disabled, setDisabled] = useState(false)
 
   // call gets on load/reload
   useEffect(() => {
@@ -39,6 +40,9 @@ function Map() {
     })
     dispatch({
       type: 'GET_SQUAD_COMPANION'
+    })
+    dispatch({
+      type: 'GET_ITEMS'
     })
   }, [])
 
@@ -88,6 +92,8 @@ function Map() {
   let odds = 10
   const tameAttempt = () => {
 
+    setDisabled(true)
+
     // sets attempt value on click
     let attempt = Math.floor(Math.random() * (odds - 1 + 1)) + 1
     if (odds < 20) {
@@ -121,6 +127,13 @@ function Map() {
       }
       alert("Animal Sucessfully Tamed!")
     }
+
+    // item quantity -1
+    dispatch({
+      type: 'USE_ITEM',
+      payload: {id : 1}
+    })
+    setDisabled(false)
   }
 
   return (

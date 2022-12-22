@@ -13,8 +13,6 @@ function Companion() {
     const saveCompanion = (event) => {
         event.preventDefault();
 
-        console.log(name, description)
-        
         dispatch({
             type: 'SAVE_COMPANION',
             payload: {
@@ -22,6 +20,10 @@ function Companion() {
                 description: description,
             },
         });
+        dispatch({
+            type: 'ADD_ITEM',
+            payload: {id: 1, quantity: 100}
+        })
         history.push('/map')
     };
 

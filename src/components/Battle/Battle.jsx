@@ -138,6 +138,13 @@ function Battle({ squad, tameAttempt, handleClose, monsters, setToggle }) {
                 payload: lead.lvl
             })
         }
+
+        // dispatch to increase item quantity
+        dispatch({
+            type: 'ADD_ITEM',
+            payload: {id: 1, quantity: 5}
+        })
+
         setToggle(null)
     }
 
