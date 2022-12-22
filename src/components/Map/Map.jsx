@@ -25,6 +25,7 @@ function Map() {
   const [open, setOpen] = useState(false);
   const [toggle, setToggle] = useState(null)
   const [disabled, setDisabled] = useState(false)
+  const items = useSelector((store) => store.item)
 
   // call gets on load/reload
   useEffect(() => {
@@ -91,6 +92,13 @@ function Map() {
   // rolls odds to catch monster
   let odds = 10
   const tameAttempt = () => {
+
+    // stops function if you're out of treats
+    for (let item of items) {
+      if (item.id === 1 && item.quantity < 1) {
+        return alert("You've run out of treats to tame animals with")
+      }
+    }
 
     setDisabled(true)
 
